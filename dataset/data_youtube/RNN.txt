@@ -1,0 +1,161 @@
+Hello everyone, let's start the lecture of the AI seminar.
+Today's topic is Recurrent Neural Networks (RNNs).
+These are the topics of the lecture today.
+First, I explain time-series data.
+Next, I explain RNNs.
+Now, let see the time-series data.
+Time-series data is the data that changes over time.
+Here is an example of time-series data.
+The natural language that I am speaking now is time-series data.
+Sentences and conversations are included in natural language.
+Other time-series data include stock prices and weather which change every day.
+It is known that values at a given time are generally correlated with values at the time past and future values.
+For example, a natural language has grammar.
+In Japanese, verbs, and nouns appear according to a set of rules.
+Therefore, this time-series data is considered to be data that is related to the past data future data.
+As a simple example, let's see the temperature data.
+This graph shows the date on the horizontal axis and the temperature on the vertical axis.
+Time elapses from left to right on the horizontal axis.
+This graph shows a relationship where the temperature gradually increases.
+Let's think about what we can do with this data.
+For example, we can predict temperature.
+If the temperature can be predicted, it will be useful for weather forecasting.
+However, processing time-series data is very difficult.
+Time-series data is often correlated with the past data future data.
+Therefore, it is necessary to take into account the data accumulated just before.
+To predict the temperature on the January 4th,
+we need to take into account the data from January 1st to January 3rd.
+Let's consider how we can predict data on the MLP, which we learned in the previous lecture.
+In this case, the structure of the MLP changes depending on the number of past data to be referenced.
+With this time-series data, it is difficult to predict the temperature on the January 4th day by looking at only January 3rd.
+As I mentioned earlier, prediction using data over a long period is more accurate.
+It is also difficult to determine how much past data is needed to predict the temperature of the next day.
+However, in the case of MLP, we cannot create a structure unless we determine the reference range.
+For example, if we want to refer to the past temperature for three days, the number of input layers is three.
+If we refer to the past four days of temperature, the number of input layers becomes four.
+It is not possible to define the structure of the network without determining in advance the quantity to be referenced.
+It is also difficult to know how many days should be referred.
+This is where the Recurrent Neural Networks (RNNs) comes in.
+First, let's see the structure.
+The Recurrent Neural Networks are called RNNs for short.
+This neural network has a feedback structure in the hidden layer.
+This method introduces the concept of time to neural networks.
+In the case of MLP, the input is processed in the hidden layer(s), and we get output(s).
+The RNN has a feedback structure in the hidden layer.
+The feedback connection is also acquired by training.
+One of the features of RNN is that "h^t" is determined by the current input and the state of the hidden layer one-time step before.
+First, let's try to understand it simply.
+RNN has a feedback connection in the hidden layer.
+In this lecture, from now on, we have will use this block diagram,
+instead of the notation using neurons and synapses.
+Remember that the square and an arrow on the right diagram mean the same thing as on the left diagram.
+we called the diagram which only has the black arrow pointing to the right, a forward propagation network.
+The key character of RNNs is that they have a feedback connection to themselves.
+Again, the notation on the right will be used from now on.
+First, let's consider the forward calculation of the RNN.
+The way to calculate the output "h^t" of the hidden layer is different from the one of the MLP.
+In the case of MLPs, the output of the hidden layer is obtained by multiplying weights to the input and applying the activation function.
+In the case of RNNs, since they have feedback connections,
+The output of the hidden layer is obtained by...
+multiplying the feedback connection and the state of the hidden layer of the one-time step before,
+in addition to the multiplication of inputs and outputs.
+It is relatively easy to understand.
+The idea is to consider the input from the left together with the feedback connection part.
+Now, we can calculate forward propagation.
+Let's think about how we will train the networks.
+The network is trained by back-propagation to calculate the gradient of the weights and biases, like MLPs.
+The weights and biases are updated by optimizing them.
+Let's look at the lower figure.
+The output in the forward propagation is compared with the target and the error is fed back.
+This black arrow is the same as in MLPs.
+In the case of RNNs, this feedback connection is also updated using gradients.
+The point is how to calculate the yellow part.
+We will unfold the hidden layers in the time direction.
+Let's consider how we unfold the network through time.
+The input of the hidden layer is the output of the hidden layer at the previous time and the input of the current time.
+Let's consider how we calculate the yellow part.
+The network is represented like the figure on the right side by unfolding the yellow area through time.
+t, "t = 1", "t = 2", "t = T" is the time.
+Let's consider the left most part, "t = 1".
+The input "x^1" at time 1 is passed through the hidden layer and the output "y^1" is obtained.
+Next, let's consider the "t = 2".
+The output "y^2" is obtained by combining the current input "x^2"
+and the state of the hidden layer "h^1" of the one-time step before.
+The arrow from "h^1" to "h^2" corresponds to "h^(t - 1)" in the figure on the left.
+The same can be done for "t = 3" and "t = 4".
+As the number of times is increased, it is expanded horizontally.
+In the left figure, it is represented in the feedback connection.
+These yellow areas are all hidden layers.
+It is considered a huge MLP with "T" hidden layers.
+Since this is a huge MLP, we can use the back-propagation method.
+This idea is the idea is back-propagation through time.
+It's called BPTT for short.
+Since BPTT is a huge MLP, by propagating the error from each graph, the weights of this hidden layer can be trained.
+This is a very simple idea.
+BPPT can be divided into two main patterns depending on the way of handling time-series data.
+First: in case the target data is provided to the all-time steps.
+This is used when we predict data each time.
+The error is calculated and summed for all times and back-propagated.
+Second: in case the target data is provided only at the last time.
+It is used when we solve the classification problem at certain time intervals.
+The error is calculated at the last time, and it is back-propagated.
+Let' see the first pattern, BPTT1.
+We have target data for all time steps.
+In this example, let's consider the three-time steps.
+When "x^1â€ is inputted, "y^1" is outputted.
+Then we have "y^1_(target)" for "y^1", which gives us the error "E^1".
+In the same manner, we can get "y^2" for "x^2", and the error "E^2" is obtained.
+"E^3" can be obtained in the same manner.
+By summing up the obtained three errors, we can calculate back-propagation.
+A typical example is the problem of predicting the temperature for the next day.
+This example predicts the temperature of the next day based on the past temperatures of several days.
+If we want to predict the next day's data using three days of data, we will give those data as a target.
+The error can be accumulated for all data.
+The network predicts the temperature for the next day, "y^1" from the temperature on January 1st, 2.8 degrees.
+We can get actual data from the next day, we will use it as the target.
+Then, the error from "y^1" is fed back and we can train the "h^1".
+Next, predict the temperature on January 3rd.
+At that time, the network predicts the temperature using the data of January 1st and 2nd.
+"y^2" can be obtained by merging two values, the value from this current step and the previous step.
+We use the data from January 3rd as a target to obtain the error from "y^2".
+Both "h^1" and "h^2" are updated by back-propagating the obtained error "E^2".
+The key point is that there is a branch at the "h^2".
+If we unfold the networks many times, it becomes like this figure.
+For example, this part is updated by summing up all the errors of "E^1", "E^2", and "E^3".
+In this example, we have used data from three time steps.
+This operation can be made into a rule, we can make a program to calculate the network with many time steps.
+Let's see the next pattern, BPTT2.
+In this case, the target is given for the last time, step three.
+In this case, only the error "E^3" is branched and back-propagated.
+A typical example is classification.For example, classifying seasons based on temperature graphs.
+For example, the network output the label "winter" after the data for 7-time steps is given.
+The idea of BPTT2 is almost the same as BPTT1.
+The difference is that we calculate the error when all data is inputted.
+In the case of forward-propagation, they are merged like this figure,
+In the case of back-propagation, they are merged like this figure.
+In this way, we can consider the huge RNN as the huge MLP and train it is using the back-propagation.
+However, we have a disadvantage of the RNNs especially RNNs which are trained by BPTT.
+The BPTT can be considered a huge MLP.
+The network of T=100 corresponds to the MPL with 100 layers.
+"y^T" can be obtained by passing through the data to the hidden layer 100 times.
+In the case of forwarding propagation, it is not possible to accumulate long-term time-series data.
+When training by back-propagation, the gradient vanishing problem and gradient explosion problem will occur.
+These problems have long been known as problems of neural networks.
+This causes training failure.
+Several networks are designed to overcome this problem.
+A typical one is Long Short-Term Memory (LSTM).
+The LSTM is overcoming the disadvantage of BPTT.
+This network can acquire long-term memory.
+This is often used when we handle long sentences.
+In the LSTM, it is judged internally whether the output of the hidden layer is fully utilized.
+I just explain the fundamental concept of LSTM.
+The input gate adjusts the amount of input to the network.
+The memory cell stores the previous states.
+The forget gate adjusts the forgetting degree of the states.
+The output gate adjusts the amount of output to the next layer.
+In this way, the LSTM uses multiple gates to control the input/output and state of the network.
+If you would like to know more about LSTM, please refer to textbooks or articles available on the internet.
+Today, we have seen the recurrent neural networks:
+How we handle the time-series data and BPTT.
+Finally, we have seen the fundamental idea of LSTM as one of the practical RNNs.
+This concludes the lecture part for today.

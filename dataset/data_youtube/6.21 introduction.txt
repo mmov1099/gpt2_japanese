@@ -1,0 +1,83 @@
+With the recent boom in deep learning, there are many products and devices around us that have AI applied.
+For example, there are smartphones and AI speakers.
+The environment for developing this AI is also very substantial.
+For example, programming frameworks include PyTorch,
+Chainer, Keras, and TensorFlow.
+Some of them have already been discontinued.
+Chainer has finished development with PyTorch as its successor.
+In addition, cloud services provided by large companies are also substantial.
+Well-known ones offered by Amazon, Google, Microsoft.
+If you use the cloud services provided by these,
+you can incorporate AI functions into your products and services
+even if you can not do programming itself.
+These are not the people who will be required in a situation where AI has become commonplace
+and the programming environment has been enriched.
+For example, people who understand the theory of deep learning,
+or people who don't know much about deep learning but can program and use the tools.
+The human resources that are needed are those who understand the mechanism of deep learning,
+have the technology that can be implemented using the library, and can tune for performance improvement.
+It is said that this machine translation has developed very much in recent years.
+These are neural network-based machine translations.
+For example, DeepL and Google Translate are said to be very accurate.
+These tools can translate languages very naturally.
+Also, make good use of these tools to read English newspapers and treatises.
+AI is said to be very involved in autonomous driving and advanced driver assistance systems (ADAS).
+This is the case of NVIDIA, but deep learning and GPU acceleration are used to detect road signs,
+signals, and stop lines in this way.
+It is becoming possible for computers to perform functions that can replace the human eye.
+Here is an example of general image recognition.
+It's a problem of guessing the category of the input image.
+This example is the result of an international image recognition contest that triggered Deep Learning attention in 2012.
+For example, if you show a picture of this tiger,
+the computer will answer that it is a tiger.
+If you show a picture of a TV, the computer will say that it is a television.
+But, in the image of the koala on the upper left, the computer answers wombat.
+Even when it makes a mistake, it makes a mistake like a human being.
+It’s been 10 years ago,
+it is said that this contest was one of the reasons for the rapid breakthrough of the Deep Neural Network.
+It is this Google Cloud Vision API
+that provides the general image recognition mentioned earlier as a cloud-based service.
+This is an API that enables cloud-based image recognition.
+Even if you don't know the mechanism of deep learning and image recognition in detail, you can use it for your service.
+For example, it is possible to add a function that detects a person's face
+and recognizes what kind of facial expression the person is currently looking at.
+There are many AI applications around us.
+You can easily experience it with a web application by actually trying it for a while. Please try it.
+The first case is the Google Cloud Vision API introduced earlier.
+You can access it from this URL.
+You can try an AI that will answer what can be seen in the image you upload.
+For example, if you upload the image on the upper left,
+the system returns the category of the image.
+For example, AI responds that "it is reflected", "nature is reflected", and "water is reflected".
+You can see that the category recognition is very accurate.
+In the example on the lower left, the characters in the image are recognized.
+You can easily try this kind of thing, please try it yourself.
+As another example, this is an example of automatically coloring a line drawing.
+Do you want to try NVIDIA Jetson AI Certification?
+This is a Certification issued by NVIDIA.
+For example, when you create a CV for employment etc., you can describe it as a qualification.
+In this lecture, you will conduct the project using AI with your free ideas,
+You can challenge this NVIDIA Certification as a final project of this lecture.
+You can also get support from the Japanese staff of NVIDIA Japan.
+I think they can handle both Japanese and English.
+The participants of this AI seminar can be supported by NVIDIA staff.
+You need to submit an English report at the end of the project.
+At that time, the university supports the proofreading fee of an English report if you need it.
+In addition, we can lend a TurtleBot, a small robot,
+and the Jetson NANO, the embedded GPU,
+that is necessary for the final task of this project.
+This is the flow of this project.
+The training phase is a lecture of this AI seminar,
+or you can be trained by watching the intro video on NVIDIA's website.
+The next project-based assessment will be the final project of this lecture.
+The report of the project-based assessment will be evaluated at NVIDIA.
+We will support equipment for the project-based assessment,
+English proofreading costs for a report.
+In addition, when applying to this NVIDIA headquarters, we will also receive support from NVIDIA employees.
+If you are interested, please visit this website.
+Detailed information is available.
+This is a Japanese article.
+This article of this certification by Robosta.
+If you are interested, please search and read by yourself.
+The people of this Robosta made an AI that judges whether people are wearing a mask.
+The Jetson AI Specialist has been certified to them as the first in Japan.

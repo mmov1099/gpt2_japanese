@@ -1,0 +1,195 @@
+We use Google Colaboratory (Colab) in the exercises part.
+First of all, I would like to explain how to set up the Colab.
+First, please go to Google Drive to set up the Colab.
+You can open Google drive from the top page of Google. Please select the drive icon from the menu.
+Please open Google Drive and create a folder for the exercises. Then, upload the distributed ipynb file in that folder.
+For the first time, we need to add the Colab service.
+Please click the New icon button in the upper left and select "Connect more apps".
+Please type "colab" in the search box in the Google Workspace Marketplace then click the Colab icon.
+Please click the install button to install.
+Please select your Google account.
+The install has been done.
+Once the installation is complete, you can launch the Colab by double-clicking on the ipynb file.
+This is the Colab screen.
+We will edit "cells".
+We have two types of cells, text cell, and code cell.
+You can add text to the text cell.
+You can add codes and run codes in the code cell.
+We will use these two cells.
+You can see the table of contents (TOC) on the left hand of the screen.
+You can hide or unhide TOC by clicking buttons.
+You can jump to that location by clicking the item in the TOC.
+You can manage files by clicking the icon at the bottom on the left side.
+In this file tab, you can upload or download files.
+You can also connect to Google Drive.
+You can fetch files from Google Drive, and push files to Google Drive.
+You can open the Notebook settings window by clicking Runtime > Change runtime type. You can choose a Hardware accelerator in this window.
+You can choose "None", "GPU", and "TPU".
+We will use GPU in the exercise.
+Now I would like to explain the contents of the exercises.
+I will explain about Examples.
+In this example, we will create a program that classifies the MNIST dataset by Multi-Layer Perceptron (MLP).
+We will use PyTorch to make a Deep Learning (DL) program. The example consists of five steps.
+First step: import libraries.
+Second step: Define Network.
+Third step: Set up an error function and optimizer.
+Fourth step: Ser up a dataset.
+Fifth step: Train network.
+Let's see the first step.
+We will import these libraries.
+Here are the codes to import libraries.
+By writing "import torch.nn as nn",
+You can shorten "torch.nn" to "nn".
+You can shorten "torch.nn.functional" to "FF", "torch.optim" to "optim" in the same manner.
+Let's run the code cell.
+You can run code by clicking the play button in the upper left or by pressing enter button with holding down the control button.
+Here we can continue programming as we did not get any error message.
+Let's move on to the second step.
+We will write a class to define a network.
+We will write class by inheriting a class called nn.Module
+We will define two methods: "init" and "forward".
+We define the structure of the network in the init method.
+We define forward propagation of the network in the "forward" method.
+This is the code cell for the network definition.
+This class inherits nn.Module.
+We have two functions, init and forward.
+We use nn.Linear to make a fully connected layer,
+and we use FF.ReLU as an activation function.
+I will explain how to define the network.
+We will use nn.Linear to make a fully connected layer.
+The nn.Linear function takes two arguments.
+The first argument is the input size, the number of neurons.
+Here, we set 784, the input size of a picture.
+The second argument is the output size.
+We set 100. It means the network has a hidden layer with 100 neurons.
+We also have a layer.
+The first argument is 100, which corresponds to the output size of the hidden layer.
+The second argument is the output size.
+The output of fc2 is the output of the network.
+The output of the MNIST dataset is the number from 0 to 9.
+We set 10 as the output size since we need 10 neurons as the output.
+We can configure network structure in this way.
+Next, let's set up the forward function.
+The forward function has an argument, x, as the input of the network.
+First, we give x in the first layer of the network, fc1.
+In the fully connected layer, we can calculate the forward propagation by giving the inputs in parentheses after the instance name.
+The return value of fc1 is the output of this fully connected layer.
+We give the returned value to the ReLU, activation function.
+You can get the output of the ReLU by giving the output of the fc1.
+Next, we can get the output x by giving the output of the ReLU to the fc2.
+Finally, the forward function returns the output of the fc2.
+We can define MPL In this way.
+Here we create an instance from the defined class.
+You can run an instance on GPU by mlp.to(device).
+Next, I will explain the settings of error functions and optimizers.
+NN.MSELoss or NN.CrossEntropyLoss is often used as the error function.
+NN.MSELoss is used for regression problems,
+NN.CrossEntropyLoss is used for classification problems.
+This time we will solve an image classification problem, we will use the NN.CrossEntropyLoss
+optim.SGD (Stochastic Gradient Descent) or optim.Adam is often used as an optimizer.
+In this example, we will use the SGD.
+We make an instance of the error function called criterion.
+We set arguments for the optimizer.
+In the first argument, we give the parameters of the network we want to train.
+We will train the parameters of the MLP defined in the previous step.
+We can get parameters for training by mlp.parameters().
+The second argument is the learning rate.
+Here, we set the value, 0.01.
+We can set the error function and optimizer in this way.
+Now we run the cell.
+Let's move on to the fourth step.
+Here, we load the MNIST dataset.
+The MNIST dataset is a grayscale image with 28x28.
+The MNIST dataset is divided into training and testing datasets.
+We have 60,000 pictures for the training, 10,000 pictures for the testing.
+Also, we set the batch size.
+The batch size is the number of data to give to the network at one time.
+The larger the number of data, the shorter the learning time will be because parallel operations will be performed.
+if you specify a too big value, a memory error will occur since the memory usage will increase. Please set the proper number.
+On the contrary, if we set the small number, the batch size is reduced.
+The learning time becomes longer, as the number of iterations increases, but the memory usage becomes smaller.
+You can download the MNIST dataset by running these two cells.
+Normally, the dataset will be downloaded automatically by running "torchvision.datasets.MNIST".
+Because of the bug of Colab, we can get an error when trying to download from the function.
+This time, we download the MNIST dataset directory.
+Please run this code cell to download the MNIST dataset.
+The torchvision.datasets.MNIST will load the downloaded dataset instead.
+We configure mainly three things in this cell.
+In this section, the image is transformed.
+We transform the dataset to a tensor array by "transforms.ToTensor" function.
+The PyTorch calculates using a tensor array.
+Here we use a normalizer.
+We transform the range of the downloaded image, [0, 1] to [-1, 1].
+Next, we load the dataset by "torchvision.dataset.MNIST".
+This function takes four arguments.
+The first argument is the location of the dataset.
+Here, we set the current directory.
+We specify whether it is a dataset for the training in the second argument.
+if you set true it is used for the training. If you set false, it is used for the testing.
+We specify whether it download the dataset.
+This time, we do not need to download it so we will set false.
+We configure the image transforming property in the fourth argument.
+The last setting is mini-batch.
+We can configure mini-batch by "torch.utils.data.Downloader"
+We will specify the dataset in the first argument,
+batch size in the second argument, and whether the data will be shuffled in the second argument.
+Because the order of data affects the learning performance,
+we need to shuffle the training data to prevent having bias.
+Because the order of data does not affect the testing we do not need to shuffle the test data.
+We can prepare the dataset in this way.
+Let's move on to the last step.
+These are the steps to train the network.
+First, we give input data and ideal output or supervised data to the network.
+Then resets the variables of the network for the differential value.
+Calculate the difference between the actual output and the ideal output of the network.
+Then run backpropagation to update the network parameters.
+These steps are repeated to train the network.
+These are the programs for the training.
+First, we specify the epoch number, the number of times the dataset is repeated.
+Here the number of the epoch is two so the dataset will be repeated two times with the for statement.
+The training dataset is repeated for each batch size in this loop.
+The variable data has the input data and label of the training for each iteration.
+We will give inputs to the MLP.
+We need to transform the image size by ".view".
+The image size will be transformed to the size of the number of the batch by 784.
+We will train using GPU.
+We need to specify the device by "to(device)".
+This is the setting of the device defined in step 2.
+If Cuda is available, the device is cuda0, otherwise, the device is CPU.
+The inputs and labels will be sent to the GPU if it is available.
+We give the inputs to the MLP for the forward propagation.
+The forward propagation can be calculated by giving the inputs to the instance of the network.
+The return value is the output of the network.
+Next, reset the differential value of the network parameter.
+Then the error function is calculated.
+We give set two arguments of the criterion defined in step 3.
+The first argument is the actual output of the network.
+The second argument is the label, the ideal output.
+The return value is the error value.
+We can calculate backpropagation by "loss.backword".
+Next, we update the network parameters with the optimizer.
+We can do it by "optimizer.step".
+To monitor the progress of the training, we print the error during the training.
+Here, we print once in hundred times.
+We can get the error value by "loss.item".
+We calculate the summation of the loss.
+We will print the average of the loss one hundred times.
+In this program, the network is tested after training each epoch.
+testloader_mnist is iterated by the for statement.
+The variable data has inputs and labels.
+We send the transformed image to the GPU in the same manner.
+Then we get the output from the MIL.
+We give the actual outputs and ideal outputs to the criterion to get the error.
+We do not need to run backward, we can get the loss by "criterion.item".
+The test loss will be sum upped.
+We will get the label from the output of the network.
+We will check the largest output of the network by "outputs.argmax".
+We will calculate the accuracy by comparing the actual outputs and the ideal outputs.
+We can compare actual outputs and an ideal output by giving labels to the "pred.eq".
+The number of correctness is summed up to the correct.
+We can get the accuracy after the iteration.
+Now, let's run this code cell.
+We will get the output of the error function once a hundred times.
+We will get the accuracy at the end of each epoch.
+Now, the training for the two epochs is finished.
+As the result, the accuracy of the network we define in this example is 89%.

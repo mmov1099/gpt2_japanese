@@ -1,0 +1,56 @@
+Next, I explain the optimization.
+We slightly update the weights and biases
+which are found by the back-propagation in the negative direction of the gradient repeatedly.
+Searching for a part with less error is called optimization.
+The parameter that determines the degree of updating is called the learning rate.
+There are various optimization methods.
+The most basic optimization algorithm is stochastic gradient descent (SGD).
+The performance is good, but the learning speed is slow.
+Adam is also a famous optimization.
+The learning rate is varying during training.
+It is said to be an improved version of SGD.
+It combines multiple optimization algorithms.
+This algorithm is efficient so learning quickly.
+The details of the optimization algorithm will not be explained in this lecture.
+If you are interested, please check the references for a detailed explanation.
+I explain the process of optimization.
+First, get a mini-batch from training data.
+Then, give the data to the network and execute forward propagation.
+Next, calculate the error between an actual output from the network and desired output, supervisory signal.
+Initialize variables for gradients and calculate the gradient of weight and bias by back-propagation.
+Gradients are accumulated in the variables.
+Finally, the weight and bias are updated by the optimization algorithm.
+Then move on to the next mini-batch.
+The process of optimization is repeated again and again.
+Next, I explain regularization.
+Overfitting occurs as we train neural networks.
+If the network is optimized for the training dataset excessively, the neural network cannot predict the test data correctly.
+The overfitting may be a cause if the network cannot predict the test dataset,
+even if the network can classify the training dataset correctly.
+Basically, as the complexity of the model increases, the training error decreases.
+It is experimentally known that there is a point where the error becomes larger.
+The horizontal axis is the complexity of the model, variance.
+The complexity of the model is the number of neurons or layers.
+We want to minimize the bias, an error from the true model.
+As the neural network is increased to a certain extent, the bias decreases.
+It is considered that overfitting has occurred on the right side of the graph.
+Regularization is a method to prevent overfitting.
+In this method, we try to suppress the increases of the variance, the error of the test data, though the training error becomes larger.
+Generalization error is the error between the true distribution and the model.
+The actual true distribution cannot be known by any means.
+Therefore, the error from the test data is used called the generalization error.
+Regularization reduces the variance of the model, and it suppresses the rise of bias.
+There are various regularization algorithms.
+For example, early stopping. Stop the training before the model overfits.
+This method, stops the learning loop before overfitting.
+L1 norm and L2 norm regularization are also used frequently.
+In this method, a penalty term for weights to the error function.
+We prevent increasing the value of the weights.
+We can also make the weights sparse.
+Then, we can reduce the variance of the model.
+Dropout is also used frequently.
+In this method, during the training, we force the output of neurons to zero randomly.
+This is expected to average networks.
+This can achieve ensemble learning.
+We regulate the network in this way.
+I do not explain the mechanism of the algorithm in this lecture.

@@ -1,0 +1,103 @@
+First, let's see the neuron model.
+This is the basis of neural networks.
+There are several major neuron models.
+The first one is the spiking neuron model.
+This mimics the nerve cells in the brain.
+In this way, we code information by the number and timing of spikes, etc.
+This neuron model is more like a brain of living things.
+The next one is this artificial neuron model.
+This is like an abstraction of brain function
+and a real number representation of the firing frequency of neurons.
+There are two main types of neural networks: spiking neural networks and artificial neural networks.
+A spiking neural network is a neural network with an approach that aims at the brain of living things.
+The artificial neural network model is an approach that aims to be useful in engineering.
+I will introduce the basics of the artificial neuron model.
+This diagram represents the artificial neuron model.
+The circle in the diagram represents a neuron,
+and the arrow represents a synapse.
+synapse has the coupling weighting, W.
+It adds a bias to the multiply accumulated w and the input.
+It applies the non-linear function and the value is outputted.
+After this, the circles and arrows in this figure often appear.
+A weight W is set at this arrow, and the multiply-accumulate operation with the input is taken for it.
+If you write it as an expression, it will be like this.
+If you see this kind of diagram, please think of it as modeling the formula for the multiply-accumulate operation.
+Let's understand the mathematical meaning of this neuron model with a simple example.
+Think about what such a linear expression means.
+If the input X is a two-dimensional vector, this equation would look like this figure.
+Since it is two-dimensional, it becomes a straight-line formula.
+What you can do with this line is, you can draw a straight line that separates this space as if it were above or below the line.
+Let's consider the n-dimensional space.
+For example, in 3-dimensional, it looks like this.
+The same thing is applied to the extended n-dimensions.
+The hyperplane separates the multidimensional space.
+This is what it means numerically when you have a single neuron.
+Next, I would like to talk about neural networks.
+As I introduced earlier, what you can do with a single neuron is
+to separate the n-dimensional space with an n-1 dimensional hyperplane.
+Problems that can be solved by such separation are called linear problems.
+So if you use a neuron model, you can solve a linear problem.
+The left is an example of AND and the right is an example of OR.
+In an AND logic device, if both inputs are 1, the output is 1, and if one or both inputs are 0, the output is 0.
+To solve this AND as a linear problem, draw a straight line here to determine
+if it is larger or smaller than the separating surface.
+By doing so, AND can be solved with the neuron model.
+And the same applies to the OR in the example on the right.
+In the case of OR, it can be solved by drawing a line here.
+Here is a question, can you solve the problem of XOR with a single straight line?
+The answer is NO.
+Please try to draw a line to separate.
+When we draw a line here, the top side is separated, but the bottom side is a mixture of 1 and 0.
+It is not separated by a single straight line.
+Also, you cannot separate them by drawing a line like this.
+This XOR problem is a typical problem that cannot be linearly separated.
+Non-linear problems are problems that are inseparable on a linear plane.
+It's called a nonlinear problem.
+We want to solve this somehow.
+Let's introduce the neural network with a hidden layer to solve nonlinear problems.
+The linear problem could be solved with a single neuron.
+We will build a network like this.
+In this case, we have two neurons in the hidden layer and one neuron in the output layer.
+The idea is to convert the input to a linearly separated space with a hidden layer, then separate in a hidden layer.
+However, no matter how many linear models are stacked, it will eventually become a linear model.
+In this hidden layer, we apply a non-linear function called the activation function.
+A neural network with such a configuration is called a Multi-Layer Perceptron (MLP).
+MLP is the most basic structure of neural networks.
+As shown here, no matter how many linear models are stacked,
+it will end up as one linear matrix.
+We apply an activation function to prevent this from happening.
+In this example, a non-linear function called ReLU is prepared as the activation function.
+The structure of ReLU is as shown in this figure.
+If the input is negative, it returns 0, and if the input is positive, it returns the input as is in the output.
+It is a non-linear function with such a structure.
+At this time, set all the arrows representing W to 1, and set the bias to 0 and -1.
+And create a hidden layer space.
+In the input space, no matter how we drew a straight line, we could not separate them.
+However, once this space is transformed and brought to the hidden layer space
+we can find a linear separation in the space of H1 and H2
+We can separate 0 and 1 by drawing a line here.
+By creating a neural network in this way, the XOR problem that could not be solved by a single linear neuron can be grasped.
+We can solve the XOR problem as a linear separation problem in the hidden layer space of the multi-layer perceptron.
+The above is the basic idea of nonlinear problems.
+And we will build various neural networks from now on.
+The structure of an input layer and output layer can be decided when the problem is decided.
+In the XOR example earlier, the input is two-dimensional, X1 and X2, so the number of the input layer is two.
+And as for the output layer, it is enough if 0 or 1 comes out, so the number of the output layer is one.
+Therefore, the input layer and output layer should be matched to the dimensions of the input/output vector.
+The hidden layer will be adjusted by the programmer.
+The parameters that are adjusted by a programmer are called hyperparameters.
+This is a technical term of this area.
+Even in a simple MLP, there are various parameters to decide.
+For example, in the case of hidden layers,
+we can increase the number of neurons to two or three though only one neuron is shown in this diagram.
+We also need to consider the number of neurons.
+It is possible to increase the number of neurons to ten or a hundred though there are only three neurons in this diagram.
+Furthermore, regarding the activation function,
+there are various activation functions in addition to the ReLU I mention earlier.
+Finding the best combinations of the parameters are called hyperparameter search, and these are defined by a programmer.
+It is generally said that the higher the number of layers and neurons, the higher the performance.
+But it is generally known that "the learning" becomes difficult,
+because the calculation cost is purely high.
+Finding a good network structure while adjusting the trade-offs is a showcase for designers.
+Commonly used activation functions include the sigmoid function and Hyperbolic tangent.
+If the activation function is nonlinear, a variety of them can be used, but they need to be differentiable.

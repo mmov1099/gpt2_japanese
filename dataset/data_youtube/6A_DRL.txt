@@ -1,0 +1,142 @@
+Hello everyone. Let’s begin the AI seminar.
+Today's topic is deep reinforcement learning, and this is the last topic in AI seminar.
+Before we look at the deep reinforcement learning, first let’s look at the overview of the reinforcement learning.
+Then, let’s look at how to solve problems of reinforcement learning with deep learning,
+and after that let’s work on the exercises.
+First, let’s look at the components of Reinforcement Learning (RL).
+One of RL components is an environment.
+The environment contains states.
+RL also consists of an agent.
+An example of an RL agent is robots or self-driving cars.
+An agent has a policy that determines it's action.
+The agent observes the state of the environment or situation in some methods.
+The agent acts based on the policy, which is determined by the given situation.
+The environment is changed after the agent takes action. The changed state is observed and the next action is taken.
+The RL operates by interactions between the agent and the environment.
+The learning method is fundamentally different from the general neural networks...
+which we have seen throughout this lecture.
+The most important point is the interaction between environment and agent.
+RL has a concept of reward. The agent operates in an environment for example of treasure hunting. (We will look at this example later.)
+The agent receives rewards, which indicate the goodness if it can find the treasure.
+The history of actions is updated by rewards, then the agent will get smarter little by little.
+This is the overall framework of RL.
+There are mainly three categories of machine learning. The first one is supervised learning, for instance, CNN, RNN, and MLP.
+The second one is unsupervised learning, for instance, AE and GAN.
+The third one is Reinforcement Learning (RL).
+The idea of RL learning method is fundamentally different from both supervised and unsupervised learning.
+Let’s look at a difference between reinforcement learning and supervised learning.
+Let’s consider a method to generate actions of the agents with supervised learning.
+The agent outputs a result from accumulated actions.
+If we can create supervisory signals for each action,
+it is possible to train the action of the agent by using supervised learning.
+Since the result is the outcome of several actions,
+It is difficult to give an accurate supervisory signal for each action to the final result,
+Therefore, supervised learning has limitations for training the agents.
+Therefore, reinforcement learning does not givea label to each action.
+The reward is given as a result of a serie of actions.
+For example, let’s consider a batter robot for baseball.
+It is difficult to give supervisory data to the serie of all data: how to swing the bat, swing angle, and speed.
+However, it is easy to give a reward to the result of actions.
+For instance, give a reward for the hits, give the reward for the homer.
+Giving a reward only at the result is what makes the difference from other learning methods.
+The RL can provide a reward relatively easily because the only result is evaluated. The RL can be utilized in many frameworks, for example, the baseball batting machine.
+The agent can acquire the policy from its experience by evaluating the action history when it received a reward.
+This is a huge difference between supervised and reinforcement learning.
+From here, let’s look at an example and try to understand the RL details.
+Let’s consider this simple maze problem. This robot can move on the white cells.
+It is good for this robot to find the treasure chest,
+however, if the robot finds the bomb, it is exploded and the game will be over.
+The cell of the treasure chest has a +1 point reward, on the other hand, the cell of the bomb has -1-point, negative reward.
+In this figure, the robot is an agent, and the maze is the environment.
+The robot searches the treasure while moving through the white cells.
+For example, when the robot is in the lower left, whether to go up or move right is determined by policy.
+Let’s say the robot is in the state, “s”.
+In this example, the state “s” is like a coordinate within the map. Since this maze contains 12 cells,
+“s” can take 12 ways of the state.
+Let’s say the robot is on the lower left in a state “s”.
+The optimal action is maybe “going up is good”. This optimal action is determined by policy.
+The policy is represented by a function. In this example, the policy is the functi on π of the state “s”.
+The action is given by the policy. In this example, the action “a” is “Go up”.
+We define a reward which is obtained from the action “a” in the state “s”.
+In this example, the reward is the treasure chest, +1 point, and a bomb, -1 point.
+For example, the robot at a left corner will act “right”, “right”, “right”, “up”, and “right”.
+Then, it will get a negative reward.
+This is an episode.
+The episode is the period from start to the end.
+This is the basic framework for reinforcement learning: environment, state, agent, policy, action, and reward.
+Next, let’s look at how to train the model.
+Let’s consider the state-action value function, “Q” value.
+In this problem, the robot can move up, down, left, and right.
+The probability of going up, down, left and right for each state is shown in this example.
+The left down cell is called a state “s0”, and this example also contains other states “s1”, “s2”, “s3”, “s4”, etc.
+The value of the action is expressed by Q function.
+The optimal action, which can increase the value, is shown in the red color in each cell.
+From this example, the optimal action to get a positive reward is “up”, “up”, “right”, “right”, and “right”.
+This series of actions makes the highest expected value of the sum of rewards.
+The Q value of the cells next to the bomb are negative.
+It is expressed by the Q function that the value goes down when it moves to the bomb’s cell.
+If a good Q function is acquired, it can solve the problem by choosing the policy that causes the highest value.
+The agent will not hit a bomb unless it selects the negative value.
+The agent can find the treasure chest easily if it receives an optimized Q function.
+Next, let’s look at the Q learning.
+First, the value of each cell is initialized uniformly or randomly.
+Next, the Q function is updated with the obtained values.
+We will apply a discount per time for the training.
+A relatively large reward is propagated to the action before able to finding the treasure chest,
+The further it is from the goal, the more discounted value it will get.
+Let’s look at an example at the lower left hand. When it moves to the right from the initial position, “s0”,
+it will get a discounted reward: the reward is one, and the discount ratio is less than one.
+However, it is also possible to find the treasure box with three steps, “down”, “right”, and “up”.
+If it acts in this manner and the Q function will be updated.
+The learning rate, the update ratio, will be determined by alpha.
+In this case, the discounted reward, the gamma, will be given by these three steps.
+At “s0”, the agent can get more reward if it moves to right rather than moving to down.
+The agent gets rewards and updates the Q value in this method.
+This is the original Q value. The Q function is updated with the parameters, which determines from the amount of the reward.
+In this example, the agent hit the bomb and the game was over.
+By repeating the episode hundreds and thousands of times,
+when the agent can find the treasure box, the Q function will be updated to positive
+The episode when the agent hits the bomb is updated with negative rewards, so negative value is accumulated.
+It is expected that a balanced and good Q-function can be acquired.
+Once the map of environment is created, the robot can work as we want.
+If we can determine the rewards, even the complicated agent can be trained.
+The RL model can be trained in a completely different framework from supervised and unsupervised learning.
+Reinforcement learning can be applied to such a wide range of fields if the reward can be determined in the first place.
+It also had the potential for the application.
+Reinforcement learning and Q learning have been studied for quite some time, however, it didn't work well.
+For instance, the problem in the Q Learning is the high dimension of the search space.
+Let’s consider the binary image of 10 x 10 pixels.
+In this example, let’s try to train the legacy ping-pong game using only images.
+Even 10 x 10 binary image has 100th power of 2 of combination. It has an enormous, 30th power of 10 states.
+It is difficult to get enough computation memory and enough samples to train so that it covers all the Q value.
+The previous maze problem with 12 states may be possible to solve, however,
+it is not possible to solve the problem which handles even only 10x10 pixels with binary image.
+We will introduce an approximate function for Q as a solution, not dividing Q evenly.
+We will set the target value and define the loss function to train the parameter theta by the gradient method.
+This is the deep reinforcement learning.
+By this, we will replace the state division of the Q-learning with deep learning.
+We will approximate Q by learning the parameters in deep learning.
+Instead of to divide an image into 10x10 pixels and train uniformly,
+We will train the image using the CNN, for example, by using the obtained network as the Q function.
+We can approximate Q by a similar number of parameters of the deep learning.
+By doing that, it will learn how to split the data, and the parameters will be updated by rewards.
+As a result, the ability to express the state is increased...
+and it becomes possible to solve various problems with the practical amount of memory and calculation time.
+Then these techniques are used for training.
+We will also define the discount rate, gamma.
+The ε-greedy method can describe how randomly it moves.
+If the ε-greedy method is not included, some actions may be affected by the randomly generated initial values.
+With a certain probability ε, it behaves uncorrelated to the Q function:
+it will take new action which have not experienced before.
+The ε-greedy method is important. It is the simplest way to give a random action.
+It is possible to explore a vast environment by acting randomly.
+In the greedy method, it only takes the most valuable known action.
+In the ε-greedy method, if the ε is small, it takes greedy actions most of the time,
+and sometimes it search for another way.
+As a result, it may be possible to find the optimal route that has not explored before.
+Experience Replay is a function that accumulates experience in memory.
+In the previous example, it is trained by repeating hundreds and thousands of episodes.
+By storing these episodes and sampling it randomly, it can avoid bias in the learning data.
+It is said that our hippocampus also has a similar function to the experience replay.
+Let’s work on the exercises. Please feel free to ask TAs questions.
+This concludes the lecture today.

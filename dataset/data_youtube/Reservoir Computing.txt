@@ -1,0 +1,155 @@
+Let's start the lecture of the AI seminar.
+The topic today is reservoir computing.
+Let's see the concept of reservoir computing.
+Please see the image below.
+Please imagine a container or lake for storing water.
+Let's say we throw stones into the water.
+If we through three stones in a row into the water,
+we can observe the ripples on the surface made by three stones.
+The ripples change depending on the size or shape of the stones.
+The ripples also change depending on the order in which they are thrown.
+Can you imagine the changes in the water surface caused by stones?
+The reservoir computing is inspired by an idea:
+extract features of time-series data by observing the shapes of the ripples.
+The order or time that stones thrown in are appears as the ripples on the surface of the lake.
+In other words, memory is represented.
+It is suitable for time-series processing.
+By attaching a simple discriminator to the reservoir,
+the pattern can be analyzed.
+The readout is the leaning machine attached to the reservoir.
+By reservoir which represents complex patterns and simple leaning machine
+time-series data can be leaned.
+A linear learning machine is often used as the readout.
+The coefficients of a linear function are determined by training.
+We have learned a perceptron at the beginning of this course.
+The time-series data can be trained by a simple learning machine.
+This is the advantage of reservoir computing.
+Here, let's compare a linear learning machine, deep learning, and reservoir computing.
+A single linear learning machine can not learn non-linear input/output relationships.
+Though the training cost of deep learning is high,
+its computation performance is high.
+It can learn non-linear input/output relationships.
+Reservoir computing is the combination of the linear leaning machine and reservoir.
+A non-linear input/output relationship can be learned with a low training cost.
+However, the computation performance will be vary depending on the tasks.
+The diagram below is cited from the textbook.
+This diagram shows the relationships between performance and training cost.
+The training cost of reservoir computing is roughly the same as a linear training machine,
+and its performance is high.
+The number of parameters to adjust is fewer than deep learning models with a similar scale.
+Though the training cost is low,
+the computation performance varies.
+By using a reservoir,
+a lightweight recurrent neural network can be constructed.
+Reservoir computing has a high potential compare to the deep neural network.
+This computation model is attracting attention these days.
+Let's see the Echo State Network (ESN) which is the typical model of reservoir computing.
+ESN is used for time-series pattern recognition.
+Echo state, where the input history echoes and remains are created in the reservoir.
+The features that appeared in the reservoir are processed by a trained readout.
+The only readout is trained.
+A simple training machine is often used as the readout.
+In the reservoir, recurrent neurons are connected complexly.
+This connection is fixed and it is not trained.
+Only W^out is trained so the training cost is low.
+This is the definition of the vectors in the diagram below.
+Input is a N_u dimension vector.
+The reservoir has many neurons, from x_1 to x_N_x.
+This is connected to the readout.
+The dimension of the output layer is N_y.
+W_in is the connection weight that connects the input layer and reservoir.
+Connection weight within the reservoir is W.
+W^out is the connection weight that connects the reservoir and output layer.
+W_in and W are fixed, and only W^out are trained.
+Let's see the representation of the time-series pattern in the reservoir.
+The input vector and W^in are multiplied and given to the reservoir.
+In the reservoir, the neuron is connected recurrently.
+The recurrent connection at the one-time step before being added.
+We can express the time evolution of the reservoir state vector.
+A non-linear activation function is applied to each neuron.
+An activation function is a hyperbolic tangent unless otherwise noted.
+The output vector is the multiplication of the reservoir state vector and W^out.
+Let's see the derived models of the ESN.
+This is the basic model we have seen.
+These are examples of the derived models of ESN.
+In this lecture, I explain the model (a), general model.
+We have some differences between the basic model and the general model.
+First, it has a feedback connection that connects the output layer to the reservoir.
+Second, it has a connection that connects the input layer and output layer directory.
+Tough we have additional connections, only W^out is trained.
+The weight of the feedback connection, shown in green, is fixed.
+We have several types of neurons.
+Here, I explain Leaky Integrator(LI) model.
+By using the LI model,
+we can control the speed of the time evolution of the reservoir state vector.
+Thus, we can control how much past information we preserve.
+Î± is a leak rate, the hyperparameter of the model.
+When, Î± = 1, only right term effects.
+It corresponds to the basic model.
+As the Î± becomes smaller, the changes in reservoir state will not affect the input, u.
+The time evolution of the reservoir becomes slower.
+This effect is as a low-pass filter that removes the high-frequency components in time-series input data.
+Sometimes, the improvement of the performance can be expected by using this model.
+This is the simple and effective derivative model of reservoir computing.
+Next, I explain the Echo State Property (ESP), which is an important idea of the ESN.
+ESP is a property that guarantees reproducibility as a time-series input-output converter.
+This is one of the properties that the reservoir should fulfill.
+The reservoir state vector is determined by the initial state and time-series input.
+If the initial state changes, a reservoir response may differ even if the same input is given.
+To prevent the effect of the initial state,
+the time evolution of the reservoir state should be determined depending only on the time series input after enough time has passed.
+This is the mathematical representation of the previous sentence.
+The reservoir state vectors starting from the different states will be converted to the same value, for example, the value conversed to zero.
+As showing in this diagram, the reservoir state vectors starting from the different states will be converted to the same orbit.
+The reservoir needs to fulfill this property.
+These are the condition that fulfills the ESP.
+here, the activation function is a hyperbolic tangent.
+We often use spectral radius as the index.
+Spectral radius is the maximum eigenvalue of the connecting weights of the reservoir.
+All eigenvalue should be less than one.
+If we continue to multiply a matrix with all eigenvalue is less than one,
+the vector will be shortened.
+By repeating this operation, the vector will be converted to zero.
+This is the famous condition that fulfills ESP.
+We need to consider this condition when we design reservoirs.
+Another condition is the maximum singular value.
+We do not see the details here, but this condition may not be essential.
+Basically, we consider spectral radius when we design reservoirs.
+Let's see the training methods.
+We only need to train readout.
+Similar to other supervised learning, we give an input and target signal.
+When it solves the regression problem, a continuous target value will be given.
+When it solves the classification problem, a one-hot vector will be given.
+We have several methods to train readout.
+This is the typical method to train the readout.
+This is an example of linear regression.
+Here we find the W^out that minimizes the squared error of the target and the output of the model.
+We will minimize the squared error of D and X.
+The formula can be transformed into the following formula.
+This is the basic method.
+Next, let's see the ridge regression.
+In this method, a regularization term is added to the equation.
+We can prevent the W^out become larger.
+This is the transformed formula.
+Similar to the regularization we have seen in this course,
+W^out can be determined by solving this equation.
+The training cost is lower.
+Lastly, let's see some examples of the tasks.
+This is an example of linear regression.
+In this task, it predicts the value of the sine wave at the next time step.
+We give input time-series data to the reservoir and train the readout.
+By using ridge regression, it can predict the sine wave.
+The output is a continuous value.
+Next, let's see the example of classification.
+This is an example of voice recognition.
+If the output value is zero, only the output neuron of "zero" becomes one.
+Other neurons do not respond.
+The target signal is the one-hot vector that corresponds to the class.
+The reservoir computing can be applied to voice recognition,
+however, we need to pre-process the input voice because the training of the original signal is difficult.
+We decompose the voice signal according to the frequency band.
+By introducing pre-proccing, the voice signal can be classified by reservoir computing.
+Now, let's quickly review the topic today.
+Reservoir computing is a lightweight model, and it has an ability equivalent to the deep recurrent neural network.
+It is drawing attention these days.
+This concludes the lecture today, thank you.

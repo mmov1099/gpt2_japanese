@@ -1,0 +1,140 @@
+Now, let's start the lecture part of the AI seminar.
+Today's topic is a mechanism called "Attention".
+First, I explain Attention, then I explain Self-Attention.
+Attention is a mechanism that has become popular recently.
+Attention is used in combination with CNN.
+By combining it with CNN, the performance can be improved with a relatively simple structure.
+Attention is used in a wide field of neural network applications.
+I will explain an overview of Attention.
+The first step is to extract simple features from a lot of input data using CNN.
+The second step does not use all of the features generated from the input. So, the network focuses on some of them.
+The focused features are then used to infer the neural network.
+It is called Attention because it focuses on a part of data or a feature.
+Attention is a mechanism that has developed in the area of natural language processing.
+I would like to introduce image processing as a simple example.
+Let's consider image recognition using CNNs.
+Let's consider the example of a sushi image.
+We consider the sushi image as an object recognition problem.
+This is an image of Buri (yellowtail).
+Humans can determine if an object is a Buri by looking only at the Buri part of an image.
+In the case of ordinary CNN, the entire image is given to the network as the input.
+Therefore, image recognition is very sensitive to the background region.
+This image has Buri on a black plate.
+Even if the color of the plate changes, the sushi on the plate is the same.
+Whatever the color of the plate, we expect the answer, "Buri".
+The image with background is given to the network, so the output is affected by the background.
+To reduce this effect, focus mechanism, attention of human is introduced to the image processing.
+We will consider how it focuses only on the sushi of the image.
+This is the concept of Attention in the field of image processing.
+First, a simple feature is extracted from the input image.
+Then branch to a neural network that estimates the region of interest.
+Obtain a mask that estimates the region of interest from the CNN like this mask image.
+The input image is masked with the image of this region of interest.
+Then, as shown in the lower-left image, only the sushi part can be extracted.
+By extracting only, the sushi region, we can build an object recognition that ignores the background area in the later stages of the network.
+The above is an example of Attention in the image recognition field.
+The attention in the image processing is easier to understand.
+Attention is a mechanism to estimate the region of interest.
+This was a simple example.
+Let's consider it with a normal CNN.
+Apply Attention to feature maps, created on the first stage of CNN.
+This concept is called Squeeze-and-Excitation Network (SENet).
+SENet builds mask information to estimate the region of interest for each feature map.
+In this example, the first feature map and the third feature map are important for recognition.
+Therefore, it constructs masks for the first and third maps to estimate the feature of interest.
+By applying the constructed mask to the original input image, such a feature map group is obtained.
+These feature maps are used for the neural network in the later stage.
+This concludes our explanation of the Attention of image processing.
+Next, let's see Attention in the field of natural language processing, where it was originally developed.
+This is an example of Attention in a network that classifies sentences.
+As an example, consider the problem of classifying sentences to determine whether the input sentence is positive or negative sentiment.
+It punctuates the input sentence into words and outputs the feature values for each word.
+Then, in general, CNNs or RNNs directly estimate positive or negative label information.
+By introducing the Attention mechanism, it is possible to extract only the features of words that are useful for decision making
+instead of using all the word features, and to make an estimation based on the extracted features.
+In this example, the word "delicious" is useful.
+This word will have a big effect on the decision of positive or negative.
+Thus, only this word is focus and the rest of the words have little effect on the output.
+In this way, Attention can be applied to sentence classification.
+Next, let's consider the example of translation.
+This is an example of a translation using LSTM without Attention.
+I explain how the translation is conducted.
+As in the previous example, punctuate the sentence into words and generate features for each word using LSTM.
+The features are generated using the encoder.
+This is based on the time-evolving model of LSTM (Sequence to Sequence).
+The model extracts feature for all words.
+The model then generates the post-translation text from the features of the entire source text.
+The Decoder will translate the text word by word, starting from the beginning of the sentence.
+Translation without Attention works like this.
+When humans translate this text, they don't look at the whole text from the beginning.
+Next, I will explain translation using Attention.
+We, humans, do not see the whole sentence from the beginning when we translate the sentence.
+We look for the subject in the sentence first, for example.
+For example, let's focus on the word "Buri".
+In this case, the feature, "Buri" is used to create the translated word.
+Attention can do something similar to the way humans translate.
+This is similar to the example in the previous image.
+The first step is to extract the features of each word.
+Then, multiply the output of the previous decoder and the output of the encoder and apply Softmax.
+By doing so, we can decide which words to focus on.
+In this example, it is decided that the second word, "Buri", should be focused on.
+The output word is then determined based on the feature, "Buri".
+Attention is used to decide which words to focus on at each step.
+Such a process is used to create the post-translation text with Attention.
+I will give an example of how to increase the accuracy of a translation using Attention.
+Source-target attention using Query-Key-Value was proposed to improve the accuracy.
+In this model, the encoder outputs a feature called Key for search and a feature called Value for the actual translation.
+In other words, this model is designed to separate the output of the Encoder.
+As in the previous example, the Decoder also has features.
+In this model, the feature of the Decoder is called Query.
+As in the previous example, let's determine the first word of the Decoder.
+The first word is given as a Query.
+And check the responses of all keys to the first word.
+Create features using the Value of the word with the largest Key response.
+Determine the translated word for the next word based on the created features.
+Let's look at the steps of the process in order.
+First, multiply the target Query by the Keys of all words.
+Focus on the word with the highest multiplication result.
+It increases the effect of the feature in the region of interest and decreases the effect of features in other regions.
+The features obtained by this attention are then used to create the translated word.
+This is the mechanism of source-target attention.
+Next, let's see the Self-Attention.
+In the case of Source-target attention explained earlier, Key / Value and Query are generated from different sources.
+In the translation example, Key / Value is generated from the Encoder, and Query is generated from the Decoder.
+For Self-Attention, Key / Value and Query are generated from the same source.
+So, Self-Attention uses the Key / Query generated by itself to weight and sum the Value generated by itself.
+The example of Self-Attention in the sentence is shown in this figure.
+Self-Attention can consider the relationship between features on the Encoder side.
+In the sentence "This yellowtail is delicious," the word "delicious" characterizes "yellowtail."
+In the case of the sentence "This yellowtail is bad," the word "tasteless" characterizes "yellowtail".
+The word "delicious" or "tasteless" is considered to characterize the previous word "yellowtail".
+In other words, it can take into account the relationship between words in the input data.
+The point of Self-Attention is to be able to focus on the relationships in the input data.
+Let's see an example of Self-Attention.
+First, it takes the inner product of the Query and all Keys of the word to be processed.
+Here, it focuses on "yellowtail" and refers to other Keys around the Query.
+The most relevant word, "delicious" will be focused on.
+Then, it receives a Value from each word.
+When a Value is received, it is weighted in such a way that the higher the weight, the more it is reflected.
+Then create the final feature.
+The information after Attention is the sum of the input word and the weighted Value.
+As described above, Self-Attention can extract the relationship between words in a sentence.
+The example of the Self-Attention in the area of natural language processing is explained.
+Self-Attention can be applied to image processing.
+Generate each Query Key Value from a set of feature maps extracted by a neural network.
+As in the case of natural language, find the important parts from Query and Key.
+Then, the values are weighted and summed.
+And add the features obtained from the weighted sum to the features of the original data.
+In this way, Attention can be applied to image processing by focusing on important features.
+I will explain the benefits of using Self-Attention for images.
+First, features that are located far apart can be considered.
+Let's consider the neural network that solves the classification problem "Is the yellowtail in the image delicious?"
+In the input image on the left,
+the Buri is so small that it would be difficult to classify with a normal CNN.
+But if we can use the information "brilliant smiling" located in the spatially distant place to characterize the "Buri"…
+it would be possible to infer that "The yellowtail is delicious."
+If there is no man with a brilliant smile in the picture, It might not be able to decide if the Buri is delicious.
+Even if there are, it is difficult to solve this problem because "man with a brilliant smile" and "Buri" are too far for a normal CNN.
+However, by applying the Self-Attention mechanism, spatially distant image features can be combined.
+By combining them, it may be able to infer that "The yellowtail is delicious".
+Today, we have seen the Attention which has various application areas such as natural language processing and image processing.

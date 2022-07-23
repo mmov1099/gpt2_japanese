@@ -1,0 +1,128 @@
+We will see some types of autoencoders.
+We will see autoencoders (AEs) today.
+The supervisory signals are needed for the training of multilayer perceptron (MLPs), CNNs, and RNNs.
+On the other hand, the autoencoder does not need supervisory signals for the training.
+This network has an hourglass-like shape as shown in the figure.
+(If you turn it 90 degrees, you can see it has an hourglass-like shape.)
+The hidden layer consists of fewer units than the input and output layers.
+It is called an hourglass because it resembles an hourglass in shape.
+Autoencoders are unsupervised model.
+It is trained to attempt to copy its input to its output.
+It does not have explicit supervisory signals.
+In other words, the input itself is a supervisor.
+The part from the input layer to the hidden layer is called an encoder.
+The part from the hidden layer to the output layer is called a decoder.
+The important point of the configuration of the autoencoder is...
+to make the number of hidden layers smaller than the number of input layers.
+It has weight “w” and bias “b” as parameters similarly to MLP.
+Tied weight, which shares the weight value is one of the configuration methods of the autoencoder.
+By making the weight from the input to the hidden layer same as the value from the hidden layer to the output layer,
+the number of training parameters can be reduced.
+It also affects as the regularization.
+Tied weight can help to improve the training performance.
+This network, which just outputs the same value as the input can extract features.
+By mapping the input to the hidden layer which has fewer units (encoding)
+and mapping the hidden layer to the output layer which has more units (decoding).
+The original information can be represented with a fewer number of units than the input.
+The effective features to represent the original image are expressed in the middle layer.
+Therefore, it can extract features and reduce dimensionalities.
+Let’s say we have 10×10 pixels image which has 100-dimensions.
+If the dimensionalities can be reduced to 10, the data can be compressed.
+It was named an autoencoder because it can learn encoder function automatically.
+The Principal component analysis (PCA) is the linear data compression method.
+The AEs are the extended model of the PCA to the non-linear distribution.
+The components of the hand-written numbers can be learned from the MNIST dataset.
+Let’s see the difference between PCA and autoencoder.
+The data shown as “x” can be approximated to the straight line in the PCA, however,
+in the autoencoder, they are approximated to the non-linear line which fit to the data “x”.
+Let’s see the next topic, Stacked AutoEncoder (SAE).
+Let’s see how we can stack autoencoders.
+The autoencoder we have seen in the previous slide has only one hidden layer.
+We can add layers of autoencoder like MLPs to get the same advantages of MLPs.
+The accuracy can be increased and the data can be expressed with the few units.
+We have several training methods for the SAE.
+One of these methods is the greedy algorithm and usually, it works well.
+This is the SAE with two hidden layers.
+It is possible to train this network at once by giving input and output, which is same as input,
+however, it is known that it is working well if it is trained layer by layer.
+First, the largest part is trained.
+Then, extract the trained hidden layer; the decoder which is shown in red color are removed.
+The hidden layer of the first trained network, “y”, which is the intermediate feature, are used as the input.
+In the next step, the smaller autoencoder is trained so that it returns the feature “y^”.
+It is the role of auto-encoder then we can get the new feature “z”.
+We can get the network which has “x”, “y” and “z” by removing the green part with the same handling-manner.
+The “x” is compressed to the smaller unit “y”, and the “y” is also compressed to the smaller unit “z”.
+The decoder parts also stacked with the same handling-manner. Finally, a large network can be constructed.
+The point is to make a small network from a such large network by handling layer by layer.This method has been used for the pre-training.
+In 2006, the first report on the success of the training of the deep neural network was published.
+Before that, it was said it is difficult to train such deep neural networks,
+since it had problems like divergence of training and vanishing gradients.
+it is proved that a deep neural network can be trained by pre-training using autoencoder.
+In the yellow part, the features are extracted in advance using stacked autoencoder,
+and in the final step, the network is trained by performing fine-tuning on the small MLP.
+This method contributed to the development of deep leaning.
+This is the first technology that has contributed to the development of deep learning.
+The stacked autoencoder used to be utilized to obtain the initial weights of deep neural networks.
+Next, let’s see some improved-autoencoders.
+First, let’s see the Sparse-AutoEncoder (SpAE).
+In the SpAE, many units are placed in the hidden layer in advance.
+In this example, the hidden unit has more units than input units.
+However, the amount of data is increased than inputs; it does not compress data.
+We will make a sparse unit to make the data compression possible.
+The hidden layer is trained so that the output of a neuron becomes 0 when input comes in.
+By adjusting the number of units with a value of 0,
+the number of active neurons in the hidden layer is reduced to make the data compression possible.
+It means, it has a large degree of freedom, and an effective network structure through training is selectable.
+It is implemented by adding a new regularization term
+Let’s suppose “E” is an original loss function.
+By adding a regularization term that makes the unit sparse to the second term.
+Kullback-Leibler divergence (KLD) is used for the calculation.
+The ρ_j hat is an accumulated value of output “y” which indicates the reactions of the unit.
+When the value of ρ, which is a hyperparameter, is decreased, the number of units of 0 will increases.
+When ρ is increased, the number of units of 0 will decreases.
+By setting proper ρ, an appropriate number of units will be activated and good features can be obtained.
+The β is the contribution ratio which determines how many units are activated.
+For example, if β is set to 0.1, the number will come out as it is. It may not a good feature sometimes.
+We can adjust the obtained feature by re-adjusting the value of β.
+Next, let’s see the Denoising AutoEncoder (DAE).
+Autoencoder is trained so that it gives the output value same as the input.
+The input data may include noise depending on the situation.
+In this example, the Gaussian noise is added intentionally to the input “4”.
+The generations have failed because the output looks like “9”.
+The solution is the necessity of a simple and powerful algorithm.
+The various noises are added only to the input data, and give original data as outputs.
+We can obtain the feature that is resistant to noise.
+It is more likely to force the data to put onto the green line.
+The concept of DAE can be applied in various ways.
+Next, let’s look at the variational autoencoders (VAEs).
+The autoencoder has the features as a hidden layer.
+The output layer operates to reconstruct the input.
+The internal value is deterministic.
+On the other hand, the units in the hidden layer of the VAE represent the probable values.
+This allows the output layer to produce probabilities that represent the inputs.
+The internal value also operates probabilistically.
+For example, if the internal value is “0.5”, it outputs “1” with the probability 50%.
+The point is the internal value is a probability, not a definite value as the ordinary autoencoder.
+Even through, the structure is similar.
+The hidden layer represents the random numbers:
+it represents the mean value and variance of random numbers.
+This figure is rotated 90 degrees for the explanation.
+Random numbers are obtained by inputting seeds into a random number generator.
+Although the obtained value varies in seed, the same random number is obtained from the same seed.
+Input is used as a seed.
+Both of the above two images are shaped like 0.
+A “0”-like image creates the seed for the “0”. “4”-like image creates the seed for the “4”.
+The value of the hidden layer is created by seed, as same as the random generator.
+From this, the random number generation process can be compared as a process of this model.
+The output layer gives the probability which represents the input.
+It can give different output given the same input since the model is operated by random numbers.
+We can get the blurred output if we visualize the output layer
+Let’s quickly review.
+The input flow from the bottom to the top.
+First, it generates the seeds from the input layer.
+It produces a similar value from a similar image.
+A random number for the hidden layer is created from the obtained seeds.
+At last, the hidden layers are converted to the output layer.
+The values are represented as the probability.
+This is the end of the lecture part of autoencoders.
+Please move on to the exercise part.

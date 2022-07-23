@@ -1,0 +1,139 @@
+let's talk about the training of neural networks.
+Training of the neural networks is...
+to calculate the optimal weight and bias so that the neural network can approximate the desired input-output relationship.
+Weights are shown in the arrow that connects the circles in this figure.
+In the formula, weights correspond to W and b.
+For multi-layer perceptrons,
+We train parameters between the hidden layer and the output layer.
+Let's consider the XOR example, ...
+with the inputs, [0, 0], [0, 1], [1, 0], [1, 1].
+Calculate the W and b so that XOR output correctly.
+When the network scale is small, we can search for and set parameter values by hand.
+If the network is large, humans can't set parameters on their own.
+Therefore, we train the network using data.
+To train the network, it calculates the changes of error between...
+an actual output and the desired output with respect to the weight and bias of NN.
+It adjusts the parameters to make the error small.
+We use backpropagation to find out the changes of the error.
+Adjusting the weight and bias to minimize the error is called optimization.
+In the figure on the right, the horizontal axis represents the weight and bias and the vertical represents the error.
+Let's see how we give the data.
+This example is a dataset called Fashion-MNIST, often used for image recognition.
+Data is generally divided into three types: training, validation, and test.
+The training data is used to update the model weights and biases.
+The validation data is not used to update the model,
+but is used to evaluate the model and adjust training.
+Therefore, the neural network is trained by training and validation datasets.
+After the network has been trained,
+we evaluate the generalization performance of the post-training model using the test dataset.
+Please make sure the data is divided into training, validation, and test.
+Next, I will explain the words, batch, and epoch which decide how to give training data.
+We give the data in units called mini-batch.
+Let's consider this example.
+Here, the batch size 10, so 10 images are given at the same time.
+Batch size is important. It is said, it is better to give the data together to some extent.
+However, if the batch size too large, The program may not run due to insufficient GPU memory.
+We need to adjust the batch size.
+In the example, the dataset is divided into 8 mini-Batch.
+The process of feeding all the training data is called an epoch.
+Please understand property the meaning of the important terms - batch, batch size, and epoch - using this figure.
+Next, I explain the training method, back-propagation.
+Back-propagation is the method to calculate the gradient of the error function with respect to weight and bias.
+That is, it calculates the differential value.
+Error function defines the error between the actual output of the neural network and the desired output.
+The function outputs a large value when the error is large.
+For example, in the case of the regression task, we use mean squared error.
+The regression task is the task that predicts continuously changing values.
+For example, predicting temperature is the regression task.
+The cross-entropy error function is often used for a classification task.
+The classification task is a task that predicts the class to which the data belongs.
+For instance, if we show the image of the number "1" to the network, the neuron of the class "1" is activated.
+Now let's calculate the Back-Propagation method.
+Take a 3-layer MLP as an example.
+It consists of an input layer, hidden layer, and output layer.
+The indices of the neuron are i, j, and k, respectively.
+Here, let's review the calculation of forward propagation.
+The calculation from the input layer to the output layer is called forward propagation.
+Similar to the example of the XOR task,
+First, multiply accumulated input x and weight w between the input-hidden layer, and bias are added.
+Then, the non-linear function is applied.
+The value of the hidden layer is the output of the input layer.
+Calculation from the hidden layer to the output layer is conducted using the output of the hidden layer.
+In the same manner, a multiply-accumulated operation and a non-linear function are applied.
+Once the value is outputted, we determine the difference between the actual output and the desired output.
+That is, we compare an actual output and the supervisory data.
+We use the error function to determine the differences.
+Let's see two types of error functions.
+The first one is the mean square error function.
+This is used for the regression tasks.
+The desired output (t) is given as a supervisory signal.
+The second one is the cross-entropy error function.
+In this case, the correct answer t is given as a label.
+In the label, the correct class is represented as "1", others are represented as "0",
+The error between the actual output and target is measured using the error function.
+After we measure the error, we apply the back-propagation.
+Backpropagation is a calculation process from the output layer to the input layer.
+We calculate the partial derivative of the output of the error function with respect to w.
+The partial derivative is expanded to the product of three partial derivatives.
+The expanded partial differential equation corresponds to the figure.
+We replace the second and third partial derivatives of the equation with delta k.
+Let's consider the first one of the yellow parts.
+Multiple errors from the output layer and the hidden layer are flowing into this part.
+You need to think about the formula with that in mind.
+The error between the actual output and the target can be propagated backward.
+However, since the calculation of backward propagation is complicated,
+the reverse mode differentiation using a calculation graph is adopted in recent deep learning frameworks.
+The back-propagation is automatically calculated by the framework using the reverse mode derivative.
+This allows the programmer to define the network easily.
+This is one of the big advantages of using the framework.
+We do not calculate this operation manually in this class.
+We can get the output, y by calculating the hierarchical structure.
+The back-propagation is very complicated:
+We need to calculate the derivatives of L, g, ...
+If all the elements in the calculation graph can be differentiable,
+the framework will calculate the differences automatically.
+I mentioned that the activation functions g1 and g2 are differentiable.
+Therefore, both the error function and the non-linear activation function need to be differentiable to calculate back-propagation.
+I briefly explain the mechanism of reverse mode differentiation.
+Let's consider this simple example.
+A calculation graph is a representation of operations and data with nodes and edges.
+Nodes represent data and basic arithmetic operations,
+and edges shown as arrows represent the flow of calculation results.
+Let's say we calculate a x b + c x d.
+The corresponding graph is shown in the slide.
+The calculation result of a x b + c x d is entered in g in the figure.
+Let's think about the mechanism of reverse mode differentiation.
+In the equation, a x b + c x d,
+a x b corresponds to e in the graph,
+c x d corresponds to f.
+The result of e + f corresponds to g.
+It is assumed that 3, 2, 4, 5 are inputs to the inputs a, b, c, and d, respectively.
+Then, consider differentiating each part of the calculation graph.
+First, we consider the most right part, g.
+The result of the partial derivative of g with respect to g is "1".
+Think backward from here.
+When thinking between g and e, the answer can be obtained by differentiating g with e.
+Since g = e + f, the result is 1 by differentiating e + f with e.
+Similarly, the result is i by differentiating e + f with f.
+When thinking between e and a, the answer can be obtained by partial derivative of e with respect to a.
+Similarly, since e = a x b, the result of the partial derivative of e with respect to a is b.
+Since b is 2, this part becomes 2.
+We can calculate the derivative values of all edges in the same manner.
+Let's see an idea of the chain rule.
+If you know the differential values for all edges.
+We can calculate the partial derivative of g with respect to a using the chain rule.
+It can be calculated using the values of the edge.
+It is difficult to calculate the partial derivative of g with respect to using the original equation,
+however, it can be easily obtained by using a calculation graph and a chain rule.
+The result of the partial derivative of g with respect to a is obtained as 1* 2 = 2.
+This is an example calculation graph of the neural network.
+It multiplies accumulate x and w,
+then, the target is given.
+All derivatives can be solved by the reverse mode differentiation using the calculation graph.
+Once the programmer defines the feedforward propagation and the error function
+using the framework of the deep neural network,
+the framework automatically calculates the graph.
+It also calculates reverse mode differentiation to get all gradients.
+Programmers do need to consider the mechanism of the framework,
+though I explained the mechanism of the back-propagation and reverse mode differentiation.
+The frameworks make the programming of deep neural networks easier.

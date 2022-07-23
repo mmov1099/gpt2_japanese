@@ -1,0 +1,87 @@
+Today, we are going to study convolutional neural networks (CNNs).
+The CNNs are a powerful neural network designed for image recognition.
+It catalyzed the current AI boom.
+In the 2012 Image Recognition Competition, this CNN won first place with a big difference in performance.
+It was a breakthrough in AI, and since then, various CNN models have been developed.
+The CNNs are the basic model of image processing
+such as object recognition, posture estimation, object detection, and segmentation.
+The CNNs are also applied for various fields,
+for example, natural language processing, audio signal processing, and time series prediction.
+The CNNs consist of convolutional process and affine transformation.
+The famous CNNs, LeNet model,
+uses convolution and pooling twice as the convolutional process.
+The LeNet has three fully connected layers for the affine transformation.
+In the convolutional process, it extracts image features.
+Therefore, this network has an additional feature extraction to the basic neural network.
+The fully connected network, Multilayer Perceptron (MLP) can handle the classification problem, however,
+it is specialized for the specific pattern.
+Both numbers, seven on the slide looks the same for humans, however,
+these two seven are slightly different from one other:
+the white pixels are shifted downwards.
+The MLP cannot handle this kind of shifted feature.
+Let’s say, this network is trained and when a white pixel comes in the center, the neurons fire strongly.
+What would happen if only one pixel has been shifted?
+This network has not trained for the shifted input.
+The final layer will not be fired
+because the strongly connected part and the position of white pixel do not align.
+Therefore, MLP cannot extract the feature even if there is a tiny difference within human eyes.
+However, the CNNs have overcome this problem.
+It specializes in the local pattern.
+In the MLP, all neurons in the input layer and hidden layer were connected.
+By repeatedly arranging simple connection patterns,
+the neuron will be connected with neighboring neurons,
+As a result, it can extract the local pattern in a wide range.
+It is possible to construct a neural network that is invariant to the parallel translation.
+The CNN extracts feature with the combination of convolution and pooling.
+The edge information can be extracted from the small filters
+which may helpful for image recognition.
+The complex cells are constructed by the combination of simple cells.
+The features that are invariant to movement are extracted by pooling.
+In this way, the features for the recognition are extracted effectively.
+Let’s look for more details of the convolution and pooling.
+Convolution is similar to an image filter.
+For example, let’s assume that there are input and filter patterns as shown in the slide.
+It executes convolution as shown in this expression.
+The result is 24 after the filter is applied to the upper left area of the matrix.
+It executes the multiply-accumulate operation of the image pixels and filters.
+We can make image filters that extract horizontal edges and vertical edges.
+By the training of CNN, the image filter becomes more effective to recognize the image.
+The next process is pooling.
+It has two purposes.
+One is the reduction of data dimension.
+As the features are extracted by applying a filter,
+the number of dimensions of the features will increase.
+The point is reducing dimensions so that it keeps important information.
+The other purpose is acquiring translation invariances.
+There are two main types of pooling.
+In this example, the 4 × 4 image is converted to a 2 x 2 image.
+The max-pooling is the process that returns the largest value in the block.
+The average-pooling is the process which outputs the mean value of the block.
+Let’s consider why pooling can acquire the movement invariance.
+In this example, max-pooling is executed on four pixels.
+In the right-hand pixel, a white pixel that seems to be useful for character recognition is shifted downward by one pixel.
+In both cases, the result of the max-pooling is the same:
+the white pixel can be extracted.
+It is possible to acquire movement-invariant features.
+We have seen the basics of CNNs, convolution, and pooling.
+The filter might not be applied to the pixels on the edge.
+The pixels near the boundary can be processed by padding.
+The padding with zero is called zero paddings.
+We can set the padding, and slide as network parameters.
+By padding, we can get the output that has the same size as the input.
+Let’s consider why pooling can acquire the movement invariance.
+In this example, max-pooling is executed on four pixels. Stride is the amount of the shift of the filter.
+Stride 1 is the minimum. It means shifting the filter by 1 pixel.
+In the right-hand pixel, a white pixel that seems to be useful for character recognition is shifted downward by one pixel.
+Stride 2 means shifting the filter by 2 pixels.
+The stride can also be set as a parameter.
+The size of the obtained feature map is dependent on the number of padding and stride.
+The local features can be extracted by the small filter.
+CNN has many models, and the famous CNN has a unique name.
+The LeNet is an old neural network
+It consists of 2 convolution layers (Conv.) and three Fully Connected Layers (FC).
+AlexNet is a famous CNN network that won the competition in 2012.
+There are many other famous networks, like VGG, GoogLeNet, and ResNet.
+The new networks with various features,
+not only stacking layers, are released almost every month.
+Please work on the character recognition assignments using CNN in the exercise part.

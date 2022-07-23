@@ -1,0 +1,1472 @@
+First, let's see the neuron model.
+This is the basis of neural networks.
+There are several major neuron models.
+The first one is the spiking neuron model.
+This mimics the nerve cells in the brain.
+In this way, we code information by the number and timing of spikes, etc.
+This neuron model is more like a brain of living things.
+The next one is this artificial neuron model.
+This is like an abstraction of brain function
+and a real number representation of the firing frequency of neurons.
+There are two main types of neural networks: spiking neural networks and artificial neural networks.
+A spiking neural network is a neural network with an approach that aims at the brain of living things.
+The artificial neural network model is an approach that aims to be useful in engineering.
+I will introduce the basics of the artificial neuron model.
+This diagram represents the artificial neuron model.
+The circle in the diagram represents a neuron,
+and the arrow represents a synapse.
+synapse has the coupling weighting, W.
+It adds a bias to the multiply accumulated w and the input.
+It applies the non-linear function and the value is outputted.
+After this, the circles and arrows in this figure often appear.
+A weight W is set at this arrow, and the multiply-accumulate operation with the input is taken for it.
+If you write it as an expression, it will be like this.
+If you see this kind of diagram, please think of it as modeling the formula for the multiply-accumulate operation.
+Let's understand the mathematical meaning of this neuron model with a simple example.
+Think about what such a linear expression means.
+If the input X is a two-dimensional vector, this equation would look like this figure.
+Since it is two-dimensional, it becomes a straight-line formula.
+What you can do with this line is, you can draw a straight line that separates this space as if it were above or below the line.
+Let's consider the n-dimensional space.
+For example, in 3-dimensional, it looks like this.
+The same thing is applied to the extended n-dimensions.
+The hyperplane separates the multidimensional space.
+This is what it means numerically when you have a single neuron.
+Next, I would like to talk about neural networks.
+As I introduced earlier, what you can do with a single neuron is
+to separate the n-dimensional space with an n-1 dimensional hyperplane.
+Problems that can be solved by such separation are called linear problems.
+So if you use a neuron model, you can solve a linear problem.
+The left is an example of AND and the right is an example of OR.
+In an AND logic device, if both inputs are 1, the output is 1, and if one or both inputs are 0, the output is 0.
+To solve this AND as a linear problem, draw a straight line here to determine
+if it is larger or smaller than the separating surface.
+By doing so, AND can be solved with the neuron model.
+And the same applies to the OR in the example on the right.
+In the case of OR, it can be solved by drawing a line here.
+Here is a question, can you solve the problem of XOR with a single straight line?
+The answer is NO.
+Please try to draw a line to separate.
+When we draw a line here, the top side is separated, but the bottom side is a mixture of 1 and 0.
+It is not separated by a single straight line.
+Also, you cannot separate them by drawing a line like this.
+This XOR problem is a typical problem that cannot be linearly separated.
+Non-linear problems are problems that are inseparable on a linear plane.
+It's called a nonlinear problem.
+We want to solve this somehow.
+Let's introduce the neural network with a hidden layer to solve nonlinear problems.
+The linear problem could be solved with a single neuron.
+We will build a network like this.
+In this case, we have two neurons in the hidden layer and one neuron in the output layer.
+The idea is to convert the input to a linearly separated space with a hidden layer, then separate in a hidden layer.
+However, no matter how many linear models are stacked, it will eventually become a linear model.
+In this hidden layer, we apply a non-linear function called the activation function.
+A neural network with such a configuration is called a Multi-Layer Perceptron (MLP).
+MLP is the most basic structure of neural networks.
+As shown here, no matter how many linear models are stacked,
+it will end up as one linear matrix.
+We apply an activation function to prevent this from happening.
+In this example, a non-linear function called ReLU is prepared as the activation function.
+The structure of ReLU is as shown in this figure.
+If the input is negative, it returns 0, and if the input is positive, it returns the input as is in the output.
+It is a non-linear function with such a structure.
+At this time, set all the arrows representing W to 1, and set the bias to 0 and -1.
+And create a hidden layer space.
+In the input space, no matter how we drew a straight line, we could not separate them.
+However, once this space is transformed and brought to the hidden layer space
+we can find a linear separation in the space of H1 and H2
+We can separate 0 and 1 by drawing a line here.
+By creating a neural network in this way, the XOR problem that could not be solved by a single linear neuron can be grasped.
+We can solve the XOR problem as a linear separation problem in the hidden layer space of the multi-layer perceptron.
+The above is the basic idea of nonlinear problems.
+And we will build various neural networks from now on.
+The structure of an input layer and output layer can be decided when the problem is decided.
+In the XOR example earlier, the input is two-dimensional, X1 and X2, so the number of the input layer is two.
+And as for the output layer, it is enough if 0 or 1 comes out, so the number of the output layer is one.
+Therefore, the input layer and output layer should be matched to the dimensions of the input/output vector.
+The hidden layer will be adjusted by the programmer.
+The parameters that are adjusted by a programmer are called hyperparameters.
+This is a technical term of this area.
+Even in a simple MLP, there are various parameters to decide.
+For example, in the case of hidden layers,
+we can increase the number of neurons to two or three though only one neuron is shown in this diagram.
+We also need to consider the number of neurons.
+It is possible to increase the number of neurons to ten or a hundred though there are only three neurons in this diagram.
+Furthermore, regarding the activation function,
+there are various activation functions in addition to the ReLU I mention earlier.
+Finding the best combinations of the parameters are called hyperparameter search, and these are defined by a programmer.
+It is generally said that the higher the number of layers and neurons, the higher the performance.
+But it is generally known that "the learning" becomes difficult,
+because the calculation cost is purely high.
+Finding a good network structure while adjusting the trade-offs is a showcase for designers.
+Commonly used activation functions include the sigmoid function and Hyperbolic tangent.
+If the activation function is nonlinear, a variety of them can be used, but they need to be differentiable.
+let's talk about the training of neural networks.
+Training of the neural networks is...
+to calculate the optimal weight and bias so that the neural network can approximate the desired input-output relationship.
+Weights are shown in the arrow that connects the circles in this figure.
+In the formula, weights correspond to W and b.
+For multi-layer perceptrons,
+We train parameters between the hidden layer and the output layer.
+Let's consider the XOR example, ...
+with the inputs, [0, 0], [0, 1], [1, 0], [1, 1].
+Calculate the W and b so that XOR output correctly.
+When the network scale is small, we can search for and set parameter values by hand.
+If the network is large, humans can't set parameters on their own.
+Therefore, we train the network using data.
+To train the network, it calculates the changes of error between...
+an actual output and the desired output with respect to the weight and bias of NN.
+It adjusts the parameters to make the error small.
+We use backpropagation to find out the changes of the error.
+Adjusting the weight and bias to minimize the error is called optimization.
+In the figure on the right, the horizontal axis represents the weight and bias and the vertical represents the error.
+Let's see how we give the data.
+This example is a dataset called Fashion-MNIST, often used for image recognition.
+Data is generally divided into three types: training, validation, and test.
+The training data is used to update the model weights and biases.
+The validation data is not used to update the model,
+but is used to evaluate the model and adjust training.
+Therefore, the neural network is trained by training and validation datasets.
+After the network has been trained,
+we evaluate the generalization performance of the post-training model using the test dataset.
+Please make sure the data is divided into training, validation, and test.
+Next, I will explain the words, batch, and epoch which decide how to give training data.
+We give the data in units called mini-batch.
+Let's consider this example.
+Here, the batch size 10, so 10 images are given at the same time.
+Batch size is important. It is said, it is better to give the data together to some extent.
+However, if the batch size too large, The program may not run due to insufficient GPU memory.
+We need to adjust the batch size.
+In the example, the dataset is divided into 8 mini-Batch.
+The process of feeding all the training data is called an epoch.
+Please understand property the meaning of the important terms - batch, batch size, and epoch - using this figure.
+Next, I explain the training method, back-propagation.
+Back-propagation is the method to calculate the gradient of the error function with respect to weight and bias.
+That is, it calculates the differential value.
+Error function defines the error between the actual output of the neural network and the desired output.
+The function outputs a large value when the error is large.
+For example, in the case of the regression task, we use mean squared error.
+The regression task is the task that predicts continuously changing values.
+For example, predicting temperature is the regression task.
+The cross-entropy error function is often used for a classification task.
+The classification task is a task that predicts the class to which the data belongs.
+For instance, if we show the image of the number "1" to the network, the neuron of the class "1" is activated.
+Now let's calculate the Back-Propagation method.
+Take a 3-layer MLP as an example.
+It consists of an input layer, hidden layer, and output layer.
+The indices of the neuron are i, j, and k, respectively.
+Here, let's review the calculation of forward propagation.
+The calculation from the input layer to the output layer is called forward propagation.
+Similar to the example of the XOR task,
+First, multiply accumulated input x and weight w between the input-hidden layer, and bias are added.
+Then, the non-linear function is applied.
+The value of the hidden layer is the output of the input layer.
+Calculation from the hidden layer to the output layer is conducted using the output of the hidden layer.
+In the same manner, a multiply-accumulated operation and a non-linear function are applied.
+Once the value is outputted, we determine the difference between the actual output and the desired output.
+That is, we compare an actual output and the supervisory data.
+We use the error function to determine the differences.
+Let's see two types of error functions.
+The first one is the mean square error function.
+This is used for the regression tasks.
+The desired output (t) is given as a supervisory signal.
+The second one is the cross-entropy error function.
+In this case, the correct answer t is given as a label.
+In the label, the correct class is represented as "1", others are represented as "0",
+The error between the actual output and target is measured using the error function.
+After we measure the error, we apply the back-propagation.
+Backpropagation is a calculation process from the output layer to the input layer.
+We calculate the partial derivative of the output of the error function with respect to w.
+The partial derivative is expanded to the product of three partial derivatives.
+The expanded partial differential equation corresponds to the figure.
+We replace the second and third partial derivatives of the equation with delta k.
+Let's consider the first one of the yellow parts.
+Multiple errors from the output layer and the hidden layer are flowing into this part.
+You need to think about the formula with that in mind.
+The error between the actual output and the target can be propagated backward.
+However, since the calculation of backward propagation is complicated,
+the reverse mode differentiation using a calculation graph is adopted in recent deep learning frameworks.
+The back-propagation is automatically calculated by the framework using the reverse mode derivative.
+This allows the programmer to define the network easily.
+This is one of the big advantages of using the framework.
+We do not calculate this operation manually in this class.
+We can get the output, y by calculating the hierarchical structure.
+The back-propagation is very complicated:
+We need to calculate the derivatives of L, g, ...
+If all the elements in the calculation graph can be differentiable,
+the framework will calculate the differences automatically.
+I mentioned that the activation functions g1 and g2 are differentiable.
+Therefore, both the error function and the non-linear activation function need to be differentiable to calculate back-propagation.
+I briefly explain the mechanism of reverse mode differentiation.
+Let's consider this simple example.
+A calculation graph is a representation of operations and data with nodes and edges.
+Nodes represent data and basic arithmetic operations,
+and edges shown as arrows represent the flow of calculation results.
+Let's say we calculate a x b + c x d.
+The corresponding graph is shown in the slide.
+The calculation result of a x b + c x d is entered in g in the figure.
+Let's think about the mechanism of reverse mode differentiation.
+In the equation, a x b + c x d,
+a x b corresponds to e in the graph,
+c x d corresponds to f.
+The result of e + f corresponds to g.
+It is assumed that 3, 2, 4, 5 are inputs to the inputs a, b, c, and d, respectively.
+Then, consider differentiating each part of the calculation graph.
+First, we consider the most right part, g.
+The result of the partial derivative of g with respect to g is "1".
+Think backward from here.
+When thinking between g and e, the answer can be obtained by differentiating g with e.
+Since g = e + f, the result is 1 by differentiating e + f with e.
+Similarly, the result is i by differentiating e + f with f.
+When thinking between e and a, the answer can be obtained by partial derivative of e with respect to a.
+Similarly, since e = a x b, the result of the partial derivative of e with respect to a is b.
+Since b is 2, this part becomes 2.
+We can calculate the derivative values of all edges in the same manner.
+Let's see an idea of the chain rule.
+If you know the differential values for all edges.
+We can calculate the partial derivative of g with respect to a using the chain rule.
+It can be calculated using the values of the edge.
+It is difficult to calculate the partial derivative of g with respect to using the original equation,
+however, it can be easily obtained by using a calculation graph and a chain rule.
+The result of the partial derivative of g with respect to a is obtained as 1* 2 = 2.
+This is an example calculation graph of the neural network.
+It multiplies accumulate x and w,
+then, the target is given.
+All derivatives can be solved by the reverse mode differentiation using the calculation graph.
+Once the programmer defines the feedforward propagation and the error function
+using the framework of the deep neural network,
+the framework automatically calculates the graph.
+It also calculates reverse mode differentiation to get all gradients.
+Programmers do need to consider the mechanism of the framework,
+though I explained the mechanism of the back-propagation and reverse mode differentiation.
+The frameworks make the programming of deep neural networks easier.
+Next, I explain the optimization.
+We slightly update the weights and biases
+which are found by the back-propagation in the negative direction of the gradient repeatedly.
+Searching for a part with less error is called optimization.
+The parameter that determines the degree of updating is called the learning rate.
+There are various optimization methods.
+The most basic optimization algorithm is stochastic gradient descent (SGD).
+The performance is good, but the learning speed is slow.
+Adam is also a famous optimization.
+The learning rate is varying during training.
+It is said to be an improved version of SGD.
+It combines multiple optimization algorithms.
+This algorithm is efficient so learning quickly.
+The details of the optimization algorithm will not be explained in this lecture.
+If you are interested, please check the references for a detailed explanation.
+I explain the process of optimization.
+First, get a mini-batch from training data.
+Then, give the data to the network and execute forward propagation.
+Next, calculate the error between an actual output from the network and desired output, supervisory signal.
+Initialize variables for gradients and calculate the gradient of weight and bias by back-propagation.
+Gradients are accumulated in the variables.
+Finally, the weight and bias are updated by the optimization algorithm.
+Then move on to the next mini-batch.
+The process of optimization is repeated again and again.
+Next, I explain regularization.
+Overfitting occurs as we train neural networks.
+If the network is optimized for the training dataset excessively, the neural network cannot predict the test data correctly.
+The overfitting may be a cause if the network cannot predict the test dataset,
+even if the network can classify the training dataset correctly.
+Basically, as the complexity of the model increases, the training error decreases.
+It is experimentally known that there is a point where the error becomes larger.
+The horizontal axis is the complexity of the model, variance.
+The complexity of the model is the number of neurons or layers.
+We want to minimize the bias, an error from the true model.
+As the neural network is increased to a certain extent, the bias decreases.
+It is considered that overfitting has occurred on the right side of the graph.
+Regularization is a method to prevent overfitting.
+In this method, we try to suppress the increases of the variance, the error of the test data, though the training error becomes larger.
+Generalization error is the error between the true distribution and the model.
+The actual true distribution cannot be known by any means.
+Therefore, the error from the test data is used called the generalization error.
+Regularization reduces the variance of the model, and it suppresses the rise of bias.
+There are various regularization algorithms.
+For example, early stopping. Stop the training before the model overfits.
+This method, stops the learning loop before overfitting.
+L1 norm and L2 norm regularization are also used frequently.
+In this method, a penalty term for weights to the error function.
+We prevent increasing the value of the weights.
+We can also make the weights sparse.
+Then, we can reduce the variance of the model.
+Dropout is also used frequently.
+In this method, during the training, we force the output of neurons to zero randomly.
+This is expected to average networks.
+This can achieve ensemble learning.
+We regulate the network in this way.
+I do not explain the mechanism of the algorithm in this lecture.
+We use Google Colaboratory (Colab) in the exercises part.
+First of all, I would like to explain how to set up the Colab.
+First, please go to Google Drive to set up the Colab.
+You can open Google drive from the top page of Google. Please select the drive icon from the menu.
+Please open Google Drive and create a folder for the exercises. Then, upload the distributed ipynb file in that folder.
+For the first time, we need to add the Colab service.
+Please click the New icon button in the upper left and select "Connect more apps".
+Please type "colab" in the search box in the Google Workspace Marketplace then click the Colab icon.
+Please click the install button to install.
+Please select your Google account.
+The install has been done.
+Once the installation is complete, you can launch the Colab by double-clicking on the ipynb file.
+This is the Colab screen.
+We will edit "cells".
+We have two types of cells, text cell, and code cell.
+You can add text to the text cell.
+You can add codes and run codes in the code cell.
+We will use these two cells.
+You can see the table of contents (TOC) on the left hand of the screen.
+You can hide or unhide TOC by clicking buttons.
+You can jump to that location by clicking the item in the TOC.
+You can manage files by clicking the icon at the bottom on the left side.
+In this file tab, you can upload or download files.
+You can also connect to Google Drive.
+You can fetch files from Google Drive, and push files to Google Drive.
+You can open the Notebook settings window by clicking Runtime > Change runtime type. You can choose a Hardware accelerator in this window.
+You can choose "None", "GPU", and "TPU".
+We will use GPU in the exercise.
+Now I would like to explain the contents of the exercises.
+I will explain about Examples.
+In this example, we will create a program that classifies the MNIST dataset by Multi-Layer Perceptron (MLP).
+We will use PyTorch to make a Deep Learning (DL) program. The example consists of five steps.
+First step: import libraries.
+Second step: Define Network.
+Third step: Set up an error function and optimizer.
+Fourth step: Ser up a dataset.
+Fifth step: Train network.
+Let's see the first step.
+We will import these libraries.
+Here are the codes to import libraries.
+By writing "import torch.nn as nn",
+You can shorten "torch.nn" to "nn".
+You can shorten "torch.nn.functional" to "FF", "torch.optim" to "optim" in the same manner.
+Let's run the code cell.
+You can run code by clicking the play button in the upper left or by pressing enter button with holding down the control button.
+Here we can continue programming as we did not get any error message.
+Let's move on to the second step.
+We will write a class to define a network.
+We will write class by inheriting a class called nn.Module
+We will define two methods: "init" and "forward".
+We define the structure of the network in the init method.
+We define forward propagation of the network in the "forward" method.
+This is the code cell for the network definition.
+This class inherits nn.Module.
+We have two functions, init and forward.
+We use nn.Linear to make a fully connected layer,
+and we use FF.ReLU as an activation function.
+I will explain how to define the network.
+We will use nn.Linear to make a fully connected layer.
+The nn.Linear function takes two arguments.
+The first argument is the input size, the number of neurons.
+Here, we set 784, the input size of a picture.
+The second argument is the output size.
+We set 100. It means the network has a hidden layer with 100 neurons.
+We also have a layer.
+The first argument is 100, which corresponds to the output size of the hidden layer.
+The second argument is the output size.
+The output of fc2 is the output of the network.
+The output of the MNIST dataset is the number from 0 to 9.
+We set 10 as the output size since we need 10 neurons as the output.
+We can configure network structure in this way.
+Next, let's set up the forward function.
+The forward function has an argument, x, as the input of the network.
+First, we give x in the first layer of the network, fc1.
+In the fully connected layer, we can calculate the forward propagation by giving the inputs in parentheses after the instance name.
+The return value of fc1 is the output of this fully connected layer.
+We give the returned value to the ReLU, activation function.
+You can get the output of the ReLU by giving the output of the fc1.
+Next, we can get the output x by giving the output of the ReLU to the fc2.
+Finally, the forward function returns the output of the fc2.
+We can define MPL In this way.
+Here we create an instance from the defined class.
+You can run an instance on GPU by mlp.to(device).
+Next, I will explain the settings of error functions and optimizers.
+NN.MSELoss or NN.CrossEntropyLoss is often used as the error function.
+NN.MSELoss is used for regression problems,
+NN.CrossEntropyLoss is used for classification problems.
+This time we will solve an image classification problem, we will use the NN.CrossEntropyLoss
+optim.SGD (Stochastic Gradient Descent) or optim.Adam is often used as an optimizer.
+In this example, we will use the SGD.
+We make an instance of the error function called criterion.
+We set arguments for the optimizer.
+In the first argument, we give the parameters of the network we want to train.
+We will train the parameters of the MLP defined in the previous step.
+We can get parameters for training by mlp.parameters().
+The second argument is the learning rate.
+Here, we set the value, 0.01.
+We can set the error function and optimizer in this way.
+Now we run the cell.
+Let's move on to the fourth step.
+Here, we load the MNIST dataset.
+The MNIST dataset is a grayscale image with 28x28.
+The MNIST dataset is divided into training and testing datasets.
+We have 60,000 pictures for the training, 10,000 pictures for the testing.
+Also, we set the batch size.
+The batch size is the number of data to give to the network at one time.
+The larger the number of data, the shorter the learning time will be because parallel operations will be performed.
+if you specify a too big value, a memory error will occur since the memory usage will increase. Please set the proper number.
+On the contrary, if we set the small number, the batch size is reduced.
+The learning time becomes longer, as the number of iterations increases, but the memory usage becomes smaller.
+You can download the MNIST dataset by running these two cells.
+Normally, the dataset will be downloaded automatically by running "torchvision.datasets.MNIST".
+Because of the bug of Colab, we can get an error when trying to download from the function.
+This time, we download the MNIST dataset directory.
+Please run this code cell to download the MNIST dataset.
+The torchvision.datasets.MNIST will load the downloaded dataset instead.
+We configure mainly three things in this cell.
+In this section, the image is transformed.
+We transform the dataset to a tensor array by "transforms.ToTensor" function.
+The PyTorch calculates using a tensor array.
+Here we use a normalizer.
+We transform the range of the downloaded image, [0, 1] to [-1, 1].
+Next, we load the dataset by "torchvision.dataset.MNIST".
+This function takes four arguments.
+The first argument is the location of the dataset.
+Here, we set the current directory.
+We specify whether it is a dataset for the training in the second argument.
+if you set true it is used for the training. If you set false, it is used for the testing.
+We specify whether it download the dataset.
+This time, we do not need to download it so we will set false.
+We configure the image transforming property in the fourth argument.
+The last setting is mini-batch.
+We can configure mini-batch by "torch.utils.data.Downloader"
+We will specify the dataset in the first argument,
+batch size in the second argument, and whether the data will be shuffled in the second argument.
+Because the order of data affects the learning performance,
+we need to shuffle the training data to prevent having bias.
+Because the order of data does not affect the testing we do not need to shuffle the test data.
+We can prepare the dataset in this way.
+Let's move on to the last step.
+These are the steps to train the network.
+First, we give input data and ideal output or supervised data to the network.
+Then resets the variables of the network for the differential value.
+Calculate the difference between the actual output and the ideal output of the network.
+Then run backpropagation to update the network parameters.
+These steps are repeated to train the network.
+These are the programs for the training.
+First, we specify the epoch number, the number of times the dataset is repeated.
+Here the number of the epoch is two so the dataset will be repeated two times with the for statement.
+The training dataset is repeated for each batch size in this loop.
+The variable data has the input data and label of the training for each iteration.
+We will give inputs to the MLP.
+We need to transform the image size by ".view".
+The image size will be transformed to the size of the number of the batch by 784.
+We will train using GPU.
+We need to specify the device by "to(device)".
+This is the setting of the device defined in step 2.
+If Cuda is available, the device is cuda0, otherwise, the device is CPU.
+The inputs and labels will be sent to the GPU if it is available.
+We give the inputs to the MLP for the forward propagation.
+The forward propagation can be calculated by giving the inputs to the instance of the network.
+The return value is the output of the network.
+Next, reset the differential value of the network parameter.
+Then the error function is calculated.
+We give set two arguments of the criterion defined in step 3.
+The first argument is the actual output of the network.
+The second argument is the label, the ideal output.
+The return value is the error value.
+We can calculate backpropagation by "loss.backword".
+Next, we update the network parameters with the optimizer.
+We can do it by "optimizer.step".
+To monitor the progress of the training, we print the error during the training.
+Here, we print once in hundred times.
+We can get the error value by "loss.item".
+We calculate the summation of the loss.
+We will print the average of the loss one hundred times.
+In this program, the network is tested after training each epoch.
+testloader_mnist is iterated by the for statement.
+The variable data has inputs and labels.
+We send the transformed image to the GPU in the same manner.
+Then we get the output from the MIL.
+We give the actual outputs and ideal outputs to the criterion to get the error.
+We do not need to run backward, we can get the loss by "criterion.item".
+The test loss will be sum upped.
+We will get the label from the output of the network.
+We will check the largest output of the network by "outputs.argmax".
+We will calculate the accuracy by comparing the actual outputs and the ideal outputs.
+We can compare actual outputs and an ideal output by giving labels to the "pred.eq".
+The number of correctness is summed up to the correct.
+We can get the accuracy after the iteration.
+Now, let's run this code cell.
+We will get the output of the error function once a hundred times.
+We will get the accuracy at the end of each epoch.
+Now, the training for the two epochs is finished.
+As the result, the accuracy of the network we define in this example is 89%.
+We will see some types of autoencoders.
+We will see autoencoders (AEs) today.
+The supervisory signals are needed for the training of multilayer perceptron (MLPs), CNNs, and RNNs.
+On the other hand, the autoencoder does not need supervisory signals for the training.
+This network has an hourglass-like shape as shown in the figure.
+(If you turn it 90 degrees, you can see it has an hourglass-like shape.)
+The hidden layer consists of fewer units than the input and output layers.
+It is called an hourglass because it resembles an hourglass in shape.
+Autoencoders are unsupervised model.
+It is trained to attempt to copy its input to its output.
+It does not have explicit supervisory signals.
+In other words, the input itself is a supervisor.
+The part from the input layer to the hidden layer is called an encoder.
+The part from the hidden layer to the output layer is called a decoder.
+The important point of the configuration of the autoencoder is...
+to make the number of hidden layers smaller than the number of input layers.
+It has weight “w” and bias “b” as parameters similarly to MLP.
+Tied weight, which shares the weight value is one of the configuration methods of the autoencoder.
+By making the weight from the input to the hidden layer same as the value from the hidden layer to the output layer,
+the number of training parameters can be reduced.
+It also affects as the regularization.
+Tied weight can help to improve the training performance.
+This network, which just outputs the same value as the input can extract features.
+By mapping the input to the hidden layer which has fewer units (encoding)
+and mapping the hidden layer to the output layer which has more units (decoding).
+The original information can be represented with a fewer number of units than the input.
+The effective features to represent the original image are expressed in the middle layer.
+Therefore, it can extract features and reduce dimensionalities.
+Let’s say we have 10×10 pixels image which has 100-dimensions.
+If the dimensionalities can be reduced to 10, the data can be compressed.
+It was named an autoencoder because it can learn encoder function automatically.
+The Principal component analysis (PCA) is the linear data compression method.
+The AEs are the extended model of the PCA to the non-linear distribution.
+The components of the hand-written numbers can be learned from the MNIST dataset.
+Let’s see the difference between PCA and autoencoder.
+The data shown as “x” can be approximated to the straight line in the PCA, however,
+in the autoencoder, they are approximated to the non-linear line which fit to the data “x”.
+Let’s see the next topic, Stacked AutoEncoder (SAE).
+Let’s see how we can stack autoencoders.
+The autoencoder we have seen in the previous slide has only one hidden layer.
+We can add layers of autoencoder like MLPs to get the same advantages of MLPs.
+The accuracy can be increased and the data can be expressed with the few units.
+We have several training methods for the SAE.
+One of these methods is the greedy algorithm and usually, it works well.
+This is the SAE with two hidden layers.
+It is possible to train this network at once by giving input and output, which is same as input,
+however, it is known that it is working well if it is trained layer by layer.
+First, the largest part is trained.
+Then, extract the trained hidden layer; the decoder which is shown in red color are removed.
+The hidden layer of the first trained network, “y”, which is the intermediate feature, are used as the input.
+In the next step, the smaller autoencoder is trained so that it returns the feature “y^”.
+It is the role of auto-encoder then we can get the new feature “z”.
+We can get the network which has “x”, “y” and “z” by removing the green part with the same handling-manner.
+The “x” is compressed to the smaller unit “y”, and the “y” is also compressed to the smaller unit “z”.
+The decoder parts also stacked with the same handling-manner. Finally, a large network can be constructed.
+The point is to make a small network from a such large network by handling layer by layer.This method has been used for the pre-training.
+In 2006, the first report on the success of the training of the deep neural network was published.
+Before that, it was said it is difficult to train such deep neural networks,
+since it had problems like divergence of training and vanishing gradients.
+it is proved that a deep neural network can be trained by pre-training using autoencoder.
+In the yellow part, the features are extracted in advance using stacked autoencoder,
+and in the final step, the network is trained by performing fine-tuning on the small MLP.
+This method contributed to the development of deep leaning.
+This is the first technology that has contributed to the development of deep learning.
+The stacked autoencoder used to be utilized to obtain the initial weights of deep neural networks.
+Next, let’s see some improved-autoencoders.
+First, let’s see the Sparse-AutoEncoder (SpAE).
+In the SpAE, many units are placed in the hidden layer in advance.
+In this example, the hidden unit has more units than input units.
+However, the amount of data is increased than inputs; it does not compress data.
+We will make a sparse unit to make the data compression possible.
+The hidden layer is trained so that the output of a neuron becomes 0 when input comes in.
+By adjusting the number of units with a value of 0,
+the number of active neurons in the hidden layer is reduced to make the data compression possible.
+It means, it has a large degree of freedom, and an effective network structure through training is selectable.
+It is implemented by adding a new regularization term
+Let’s suppose “E” is an original loss function.
+By adding a regularization term that makes the unit sparse to the second term.
+Kullback-Leibler divergence (KLD) is used for the calculation.
+The ρ_j hat is an accumulated value of output “y” which indicates the reactions of the unit.
+When the value of ρ, which is a hyperparameter, is decreased, the number of units of 0 will increases.
+When ρ is increased, the number of units of 0 will decreases.
+By setting proper ρ, an appropriate number of units will be activated and good features can be obtained.
+The β is the contribution ratio which determines how many units are activated.
+For example, if β is set to 0.1, the number will come out as it is. It may not a good feature sometimes.
+We can adjust the obtained feature by re-adjusting the value of β.
+Next, let’s see the Denoising AutoEncoder (DAE).
+Autoencoder is trained so that it gives the output value same as the input.
+The input data may include noise depending on the situation.
+In this example, the Gaussian noise is added intentionally to the input “4”.
+The generations have failed because the output looks like “9”.
+The solution is the necessity of a simple and powerful algorithm.
+The various noises are added only to the input data, and give original data as outputs.
+We can obtain the feature that is resistant to noise.
+It is more likely to force the data to put onto the green line.
+The concept of DAE can be applied in various ways.
+Next, let’s look at the variational autoencoders (VAEs).
+The autoencoder has the features as a hidden layer.
+The output layer operates to reconstruct the input.
+The internal value is deterministic.
+On the other hand, the units in the hidden layer of the VAE represent the probable values.
+This allows the output layer to produce probabilities that represent the inputs.
+The internal value also operates probabilistically.
+For example, if the internal value is “0.5”, it outputs “1” with the probability 50%.
+The point is the internal value is a probability, not a definite value as the ordinary autoencoder.
+Even through, the structure is similar.
+The hidden layer represents the random numbers:
+it represents the mean value and variance of random numbers.
+This figure is rotated 90 degrees for the explanation.
+Random numbers are obtained by inputting seeds into a random number generator.
+Although the obtained value varies in seed, the same random number is obtained from the same seed.
+Input is used as a seed.
+Both of the above two images are shaped like 0.
+A “0”-like image creates the seed for the “0”. “4”-like image creates the seed for the “4”.
+The value of the hidden layer is created by seed, as same as the random generator.
+From this, the random number generation process can be compared as a process of this model.
+The output layer gives the probability which represents the input.
+It can give different output given the same input since the model is operated by random numbers.
+We can get the blurred output if we visualize the output layer
+Let’s quickly review.
+The input flow from the bottom to the top.
+First, it generates the seeds from the input layer.
+It produces a similar value from a similar image.
+A random number for the hidden layer is created from the obtained seeds.
+At last, the hidden layers are converted to the output layer.
+The values are represented as the probability.
+This is the end of the lecture part of autoencoders.
+Please move on to the exercise part.
+With the recent boom in deep learning, there are many products and devices around us that have AI applied.
+For example, there are smartphones and AI speakers.
+The environment for developing this AI is also very substantial.
+For example, programming frameworks include PyTorch,
+Chainer, Keras, and TensorFlow.
+Some of them have already been discontinued.
+Chainer has finished development with PyTorch as its successor.
+In addition, cloud services provided by large companies are also substantial.
+Well-known ones offered by Amazon, Google, Microsoft.
+If you use the cloud services provided by these,
+you can incorporate AI functions into your products and services
+even if you can not do programming itself.
+These are not the people who will be required in a situation where AI has become commonplace
+and the programming environment has been enriched.
+For example, people who understand the theory of deep learning,
+or people who don't know much about deep learning but can program and use the tools.
+The human resources that are needed are those who understand the mechanism of deep learning,
+have the technology that can be implemented using the library, and can tune for performance improvement.
+It is said that this machine translation has developed very much in recent years.
+These are neural network-based machine translations.
+For example, DeepL and Google Translate are said to be very accurate.
+These tools can translate languages very naturally.
+Also, make good use of these tools to read English newspapers and treatises.
+AI is said to be very involved in autonomous driving and advanced driver assistance systems (ADAS).
+This is the case of NVIDIA, but deep learning and GPU acceleration are used to detect road signs,
+signals, and stop lines in this way.
+It is becoming possible for computers to perform functions that can replace the human eye.
+Here is an example of general image recognition.
+It's a problem of guessing the category of the input image.
+This example is the result of an international image recognition contest that triggered Deep Learning attention in 2012.
+For example, if you show a picture of this tiger,
+the computer will answer that it is a tiger.
+If you show a picture of a TV, the computer will say that it is a television.
+But, in the image of the koala on the upper left, the computer answers wombat.
+Even when it makes a mistake, it makes a mistake like a human being.
+It’s been 10 years ago,
+it is said that this contest was one of the reasons for the rapid breakthrough of the Deep Neural Network.
+It is this Google Cloud Vision API
+that provides the general image recognition mentioned earlier as a cloud-based service.
+This is an API that enables cloud-based image recognition.
+Even if you don't know the mechanism of deep learning and image recognition in detail, you can use it for your service.
+For example, it is possible to add a function that detects a person's face
+and recognizes what kind of facial expression the person is currently looking at.
+There are many AI applications around us.
+You can easily experience it with a web application by actually trying it for a while. Please try it.
+The first case is the Google Cloud Vision API introduced earlier.
+You can access it from this URL.
+You can try an AI that will answer what can be seen in the image you upload.
+For example, if you upload the image on the upper left,
+the system returns the category of the image.
+For example, AI responds that "it is reflected", "nature is reflected", and "water is reflected".
+You can see that the category recognition is very accurate.
+In the example on the lower left, the characters in the image are recognized.
+You can easily try this kind of thing, please try it yourself.
+As another example, this is an example of automatically coloring a line drawing.
+Do you want to try NVIDIA Jetson AI Certification?
+This is a Certification issued by NVIDIA.
+For example, when you create a CV for employment etc., you can describe it as a qualification.
+In this lecture, you will conduct the project using AI with your free ideas,
+You can challenge this NVIDIA Certification as a final project of this lecture.
+You can also get support from the Japanese staff of NVIDIA Japan.
+I think they can handle both Japanese and English.
+The participants of this AI seminar can be supported by NVIDIA staff.
+You need to submit an English report at the end of the project.
+At that time, the university supports the proofreading fee of an English report if you need it.
+In addition, we can lend a TurtleBot, a small robot,
+and the Jetson NANO, the embedded GPU,
+that is necessary for the final task of this project.
+This is the flow of this project.
+The training phase is a lecture of this AI seminar,
+or you can be trained by watching the intro video on NVIDIA's website.
+The next project-based assessment will be the final project of this lecture.
+The report of the project-based assessment will be evaluated at NVIDIA.
+We will support equipment for the project-based assessment,
+English proofreading costs for a report.
+In addition, when applying to this NVIDIA headquarters, we will also receive support from NVIDIA employees.
+If you are interested, please visit this website.
+Detailed information is available.
+This is a Japanese article.
+This article of this certification by Robosta.
+If you are interested, please search and read by yourself.
+The people of this Robosta made an AI that judges whether people are wearing a mask.
+The Jetson AI Specialist has been certified to them as the first in Japan.
+Hello everyone. Let’s begin the AI seminar.
+Today's topic is deep reinforcement learning, and this is the last topic in AI seminar.
+Before we look at the deep reinforcement learning, first let’s look at the overview of the reinforcement learning.
+Then, let’s look at how to solve problems of reinforcement learning with deep learning,
+and after that let’s work on the exercises.
+First, let’s look at the components of Reinforcement Learning (RL).
+One of RL components is an environment.
+The environment contains states.
+RL also consists of an agent.
+An example of an RL agent is robots or self-driving cars.
+An agent has a policy that determines it's action.
+The agent observes the state of the environment or situation in some methods.
+The agent acts based on the policy, which is determined by the given situation.
+The environment is changed after the agent takes action. The changed state is observed and the next action is taken.
+The RL operates by interactions between the agent and the environment.
+The learning method is fundamentally different from the general neural networks...
+which we have seen throughout this lecture.
+The most important point is the interaction between environment and agent.
+RL has a concept of reward. The agent operates in an environment for example of treasure hunting. (We will look at this example later.)
+The agent receives rewards, which indicate the goodness if it can find the treasure.
+The history of actions is updated by rewards, then the agent will get smarter little by little.
+This is the overall framework of RL.
+There are mainly three categories of machine learning. The first one is supervised learning, for instance, CNN, RNN, and MLP.
+The second one is unsupervised learning, for instance, AE and GAN.
+The third one is Reinforcement Learning (RL).
+The idea of RL learning method is fundamentally different from both supervised and unsupervised learning.
+Let’s look at a difference between reinforcement learning and supervised learning.
+Let’s consider a method to generate actions of the agents with supervised learning.
+The agent outputs a result from accumulated actions.
+If we can create supervisory signals for each action,
+it is possible to train the action of the agent by using supervised learning.
+Since the result is the outcome of several actions,
+It is difficult to give an accurate supervisory signal for each action to the final result,
+Therefore, supervised learning has limitations for training the agents.
+Therefore, reinforcement learning does not givea label to each action.
+The reward is given as a result of a serie of actions.
+For example, let’s consider a batter robot for baseball.
+It is difficult to give supervisory data to the serie of all data: how to swing the bat, swing angle, and speed.
+However, it is easy to give a reward to the result of actions.
+For instance, give a reward for the hits, give the reward for the homer.
+Giving a reward only at the result is what makes the difference from other learning methods.
+The RL can provide a reward relatively easily because the only result is evaluated. The RL can be utilized in many frameworks, for example, the baseball batting machine.
+The agent can acquire the policy from its experience by evaluating the action history when it received a reward.
+This is a huge difference between supervised and reinforcement learning.
+From here, let’s look at an example and try to understand the RL details.
+Let’s consider this simple maze problem. This robot can move on the white cells.
+It is good for this robot to find the treasure chest,
+however, if the robot finds the bomb, it is exploded and the game will be over.
+The cell of the treasure chest has a +1 point reward, on the other hand, the cell of the bomb has -1-point, negative reward.
+In this figure, the robot is an agent, and the maze is the environment.
+The robot searches the treasure while moving through the white cells.
+For example, when the robot is in the lower left, whether to go up or move right is determined by policy.
+Let’s say the robot is in the state, “s”.
+In this example, the state “s” is like a coordinate within the map. Since this maze contains 12 cells,
+“s” can take 12 ways of the state.
+Let’s say the robot is on the lower left in a state “s”.
+The optimal action is maybe “going up is good”. This optimal action is determined by policy.
+The policy is represented by a function. In this example, the policy is the functi on π of the state “s”.
+The action is given by the policy. In this example, the action “a” is “Go up”.
+We define a reward which is obtained from the action “a” in the state “s”.
+In this example, the reward is the treasure chest, +1 point, and a bomb, -1 point.
+For example, the robot at a left corner will act “right”, “right”, “right”, “up”, and “right”.
+Then, it will get a negative reward.
+This is an episode.
+The episode is the period from start to the end.
+This is the basic framework for reinforcement learning: environment, state, agent, policy, action, and reward.
+Next, let’s look at how to train the model.
+Let’s consider the state-action value function, “Q” value.
+In this problem, the robot can move up, down, left, and right.
+The probability of going up, down, left and right for each state is shown in this example.
+The left down cell is called a state “s0”, and this example also contains other states “s1”, “s2”, “s3”, “s4”, etc.
+The value of the action is expressed by Q function.
+The optimal action, which can increase the value, is shown in the red color in each cell.
+From this example, the optimal action to get a positive reward is “up”, “up”, “right”, “right”, and “right”.
+This series of actions makes the highest expected value of the sum of rewards.
+The Q value of the cells next to the bomb are negative.
+It is expressed by the Q function that the value goes down when it moves to the bomb’s cell.
+If a good Q function is acquired, it can solve the problem by choosing the policy that causes the highest value.
+The agent will not hit a bomb unless it selects the negative value.
+The agent can find the treasure chest easily if it receives an optimized Q function.
+Next, let’s look at the Q learning.
+First, the value of each cell is initialized uniformly or randomly.
+Next, the Q function is updated with the obtained values.
+We will apply a discount per time for the training.
+A relatively large reward is propagated to the action before able to finding the treasure chest,
+The further it is from the goal, the more discounted value it will get.
+Let’s look at an example at the lower left hand. When it moves to the right from the initial position, “s0”,
+it will get a discounted reward: the reward is one, and the discount ratio is less than one.
+However, it is also possible to find the treasure box with three steps, “down”, “right”, and “up”.
+If it acts in this manner and the Q function will be updated.
+The learning rate, the update ratio, will be determined by alpha.
+In this case, the discounted reward, the gamma, will be given by these three steps.
+At “s0”, the agent can get more reward if it moves to right rather than moving to down.
+The agent gets rewards and updates the Q value in this method.
+This is the original Q value. The Q function is updated with the parameters, which determines from the amount of the reward.
+In this example, the agent hit the bomb and the game was over.
+By repeating the episode hundreds and thousands of times,
+when the agent can find the treasure box, the Q function will be updated to positive
+The episode when the agent hits the bomb is updated with negative rewards, so negative value is accumulated.
+It is expected that a balanced and good Q-function can be acquired.
+Once the map of environment is created, the robot can work as we want.
+If we can determine the rewards, even the complicated agent can be trained.
+The RL model can be trained in a completely different framework from supervised and unsupervised learning.
+Reinforcement learning can be applied to such a wide range of fields if the reward can be determined in the first place.
+It also had the potential for the application.
+Reinforcement learning and Q learning have been studied for quite some time, however, it didn't work well.
+For instance, the problem in the Q Learning is the high dimension of the search space.
+Let’s consider the binary image of 10 x 10 pixels.
+In this example, let’s try to train the legacy ping-pong game using only images.
+Even 10 x 10 binary image has 100th power of 2 of combination. It has an enormous, 30th power of 10 states.
+It is difficult to get enough computation memory and enough samples to train so that it covers all the Q value.
+The previous maze problem with 12 states may be possible to solve, however,
+it is not possible to solve the problem which handles even only 10x10 pixels with binary image.
+We will introduce an approximate function for Q as a solution, not dividing Q evenly.
+We will set the target value and define the loss function to train the parameter theta by the gradient method.
+This is the deep reinforcement learning.
+By this, we will replace the state division of the Q-learning with deep learning.
+We will approximate Q by learning the parameters in deep learning.
+Instead of to divide an image into 10x10 pixels and train uniformly,
+We will train the image using the CNN, for example, by using the obtained network as the Q function.
+We can approximate Q by a similar number of parameters of the deep learning.
+By doing that, it will learn how to split the data, and the parameters will be updated by rewards.
+As a result, the ability to express the state is increased...
+and it becomes possible to solve various problems with the practical amount of memory and calculation time.
+Then these techniques are used for training.
+We will also define the discount rate, gamma.
+The ε-greedy method can describe how randomly it moves.
+If the ε-greedy method is not included, some actions may be affected by the randomly generated initial values.
+With a certain probability ε, it behaves uncorrelated to the Q function:
+it will take new action which have not experienced before.
+The ε-greedy method is important. It is the simplest way to give a random action.
+It is possible to explore a vast environment by acting randomly.
+In the greedy method, it only takes the most valuable known action.
+In the ε-greedy method, if the ε is small, it takes greedy actions most of the time,
+and sometimes it search for another way.
+As a result, it may be possible to find the optimal route that has not explored before.
+Experience Replay is a function that accumulates experience in memory.
+In the previous example, it is trained by repeating hundreds and thousands of episodes.
+By storing these episodes and sampling it randomly, it can avoid bias in the learning data.
+It is said that our hippocampus also has a similar function to the experience replay.
+Let’s work on the exercises. Please feel free to ask TAs questions.
+This concludes the lecture today.
+Now, let's start the lecture part of the AI seminar.
+Today's topic is a mechanism called "Attention".
+First, I explain Attention, then I explain Self-Attention.
+Attention is a mechanism that has become popular recently.
+Attention is used in combination with CNN.
+By combining it with CNN, the performance can be improved with a relatively simple structure.
+Attention is used in a wide field of neural network applications.
+I will explain an overview of Attention.
+The first step is to extract simple features from a lot of input data using CNN.
+The second step does not use all of the features generated from the input. So, the network focuses on some of them.
+The focused features are then used to infer the neural network.
+It is called Attention because it focuses on a part of data or a feature.
+Attention is a mechanism that has developed in the area of natural language processing.
+I would like to introduce image processing as a simple example.
+Let's consider image recognition using CNNs.
+Let's consider the example of a sushi image.
+We consider the sushi image as an object recognition problem.
+This is an image of Buri (yellowtail).
+Humans can determine if an object is a Buri by looking only at the Buri part of an image.
+In the case of ordinary CNN, the entire image is given to the network as the input.
+Therefore, image recognition is very sensitive to the background region.
+This image has Buri on a black plate.
+Even if the color of the plate changes, the sushi on the plate is the same.
+Whatever the color of the plate, we expect the answer, "Buri".
+The image with background is given to the network, so the output is affected by the background.
+To reduce this effect, focus mechanism, attention of human is introduced to the image processing.
+We will consider how it focuses only on the sushi of the image.
+This is the concept of Attention in the field of image processing.
+First, a simple feature is extracted from the input image.
+Then branch to a neural network that estimates the region of interest.
+Obtain a mask that estimates the region of interest from the CNN like this mask image.
+The input image is masked with the image of this region of interest.
+Then, as shown in the lower-left image, only the sushi part can be extracted.
+By extracting only, the sushi region, we can build an object recognition that ignores the background area in the later stages of the network.
+The above is an example of Attention in the image recognition field.
+The attention in the image processing is easier to understand.
+Attention is a mechanism to estimate the region of interest.
+This was a simple example.
+Let's consider it with a normal CNN.
+Apply Attention to feature maps, created on the first stage of CNN.
+This concept is called Squeeze-and-Excitation Network (SENet).
+SENet builds mask information to estimate the region of interest for each feature map.
+In this example, the first feature map and the third feature map are important for recognition.
+Therefore, it constructs masks for the first and third maps to estimate the feature of interest.
+By applying the constructed mask to the original input image, such a feature map group is obtained.
+These feature maps are used for the neural network in the later stage.
+This concludes our explanation of the Attention of image processing.
+Next, let's see Attention in the field of natural language processing, where it was originally developed.
+This is an example of Attention in a network that classifies sentences.
+As an example, consider the problem of classifying sentences to determine whether the input sentence is positive or negative sentiment.
+It punctuates the input sentence into words and outputs the feature values for each word.
+Then, in general, CNNs or RNNs directly estimate positive or negative label information.
+By introducing the Attention mechanism, it is possible to extract only the features of words that are useful for decision making
+instead of using all the word features, and to make an estimation based on the extracted features.
+In this example, the word "delicious" is useful.
+This word will have a big effect on the decision of positive or negative.
+Thus, only this word is focus and the rest of the words have little effect on the output.
+In this way, Attention can be applied to sentence classification.
+Next, let's consider the example of translation.
+This is an example of a translation using LSTM without Attention.
+I explain how the translation is conducted.
+As in the previous example, punctuate the sentence into words and generate features for each word using LSTM.
+The features are generated using the encoder.
+This is based on the time-evolving model of LSTM (Sequence to Sequence).
+The model extracts feature for all words.
+The model then generates the post-translation text from the features of the entire source text.
+The Decoder will translate the text word by word, starting from the beginning of the sentence.
+Translation without Attention works like this.
+When humans translate this text, they don't look at the whole text from the beginning.
+Next, I will explain translation using Attention.
+We, humans, do not see the whole sentence from the beginning when we translate the sentence.
+We look for the subject in the sentence first, for example.
+For example, let's focus on the word "Buri".
+In this case, the feature, "Buri" is used to create the translated word.
+Attention can do something similar to the way humans translate.
+This is similar to the example in the previous image.
+The first step is to extract the features of each word.
+Then, multiply the output of the previous decoder and the output of the encoder and apply Softmax.
+By doing so, we can decide which words to focus on.
+In this example, it is decided that the second word, "Buri", should be focused on.
+The output word is then determined based on the feature, "Buri".
+Attention is used to decide which words to focus on at each step.
+Such a process is used to create the post-translation text with Attention.
+I will give an example of how to increase the accuracy of a translation using Attention.
+Source-target attention using Query-Key-Value was proposed to improve the accuracy.
+In this model, the encoder outputs a feature called Key for search and a feature called Value for the actual translation.
+In other words, this model is designed to separate the output of the Encoder.
+As in the previous example, the Decoder also has features.
+In this model, the feature of the Decoder is called Query.
+As in the previous example, let's determine the first word of the Decoder.
+The first word is given as a Query.
+And check the responses of all keys to the first word.
+Create features using the Value of the word with the largest Key response.
+Determine the translated word for the next word based on the created features.
+Let's look at the steps of the process in order.
+First, multiply the target Query by the Keys of all words.
+Focus on the word with the highest multiplication result.
+It increases the effect of the feature in the region of interest and decreases the effect of features in other regions.
+The features obtained by this attention are then used to create the translated word.
+This is the mechanism of source-target attention.
+Next, let's see the Self-Attention.
+In the case of Source-target attention explained earlier, Key / Value and Query are generated from different sources.
+In the translation example, Key / Value is generated from the Encoder, and Query is generated from the Decoder.
+For Self-Attention, Key / Value and Query are generated from the same source.
+So, Self-Attention uses the Key / Query generated by itself to weight and sum the Value generated by itself.
+The example of Self-Attention in the sentence is shown in this figure.
+Self-Attention can consider the relationship between features on the Encoder side.
+In the sentence "This yellowtail is delicious," the word "delicious" characterizes "yellowtail."
+In the case of the sentence "This yellowtail is bad," the word "tasteless" characterizes "yellowtail".
+The word "delicious" or "tasteless" is considered to characterize the previous word "yellowtail".
+In other words, it can take into account the relationship between words in the input data.
+The point of Self-Attention is to be able to focus on the relationships in the input data.
+Let's see an example of Self-Attention.
+First, it takes the inner product of the Query and all Keys of the word to be processed.
+Here, it focuses on "yellowtail" and refers to other Keys around the Query.
+The most relevant word, "delicious" will be focused on.
+Then, it receives a Value from each word.
+When a Value is received, it is weighted in such a way that the higher the weight, the more it is reflected.
+Then create the final feature.
+The information after Attention is the sum of the input word and the weighted Value.
+As described above, Self-Attention can extract the relationship between words in a sentence.
+The example of the Self-Attention in the area of natural language processing is explained.
+Self-Attention can be applied to image processing.
+Generate each Query Key Value from a set of feature maps extracted by a neural network.
+As in the case of natural language, find the important parts from Query and Key.
+Then, the values are weighted and summed.
+And add the features obtained from the weighted sum to the features of the original data.
+In this way, Attention can be applied to image processing by focusing on important features.
+I will explain the benefits of using Self-Attention for images.
+First, features that are located far apart can be considered.
+Let's consider the neural network that solves the classification problem "Is the yellowtail in the image delicious?"
+In the input image on the left,
+the Buri is so small that it would be difficult to classify with a normal CNN.
+But if we can use the information "brilliant smiling" located in the spatially distant place to characterize the "Buri"…
+it would be possible to infer that "The yellowtail is delicious."
+If there is no man with a brilliant smile in the picture, It might not be able to decide if the Buri is delicious.
+Even if there are, it is difficult to solve this problem because "man with a brilliant smile" and "Buri" are too far for a normal CNN.
+However, by applying the Self-Attention mechanism, spatially distant image features can be combined.
+By combining them, it may be able to infer that "The yellowtail is delicious".
+Today, we have seen the Attention which has various application areas such as natural language processing and image processing.
+Today, we are going to study convolutional neural networks (CNNs).
+The CNNs are a powerful neural network designed for image recognition.
+It catalyzed the current AI boom.
+In the 2012 Image Recognition Competition, this CNN won first place with a big difference in performance.
+It was a breakthrough in AI, and since then, various CNN models have been developed.
+The CNNs are the basic model of image processing
+such as object recognition, posture estimation, object detection, and segmentation.
+The CNNs are also applied for various fields,
+for example, natural language processing, audio signal processing, and time series prediction.
+The CNNs consist of convolutional process and affine transformation.
+The famous CNNs, LeNet model,
+uses convolution and pooling twice as the convolutional process.
+The LeNet has three fully connected layers for the affine transformation.
+In the convolutional process, it extracts image features.
+Therefore, this network has an additional feature extraction to the basic neural network.
+The fully connected network, Multilayer Perceptron (MLP) can handle the classification problem, however,
+it is specialized for the specific pattern.
+Both numbers, seven on the slide looks the same for humans, however,
+these two seven are slightly different from one other:
+the white pixels are shifted downwards.
+The MLP cannot handle this kind of shifted feature.
+Let’s say, this network is trained and when a white pixel comes in the center, the neurons fire strongly.
+What would happen if only one pixel has been shifted?
+This network has not trained for the shifted input.
+The final layer will not be fired
+because the strongly connected part and the position of white pixel do not align.
+Therefore, MLP cannot extract the feature even if there is a tiny difference within human eyes.
+However, the CNNs have overcome this problem.
+It specializes in the local pattern.
+In the MLP, all neurons in the input layer and hidden layer were connected.
+By repeatedly arranging simple connection patterns,
+the neuron will be connected with neighboring neurons,
+As a result, it can extract the local pattern in a wide range.
+It is possible to construct a neural network that is invariant to the parallel translation.
+The CNN extracts feature with the combination of convolution and pooling.
+The edge information can be extracted from the small filters
+which may helpful for image recognition.
+The complex cells are constructed by the combination of simple cells.
+The features that are invariant to movement are extracted by pooling.
+In this way, the features for the recognition are extracted effectively.
+Let’s look for more details of the convolution and pooling.
+Convolution is similar to an image filter.
+For example, let’s assume that there are input and filter patterns as shown in the slide.
+It executes convolution as shown in this expression.
+The result is 24 after the filter is applied to the upper left area of the matrix.
+It executes the multiply-accumulate operation of the image pixels and filters.
+We can make image filters that extract horizontal edges and vertical edges.
+By the training of CNN, the image filter becomes more effective to recognize the image.
+The next process is pooling.
+It has two purposes.
+One is the reduction of data dimension.
+As the features are extracted by applying a filter,
+the number of dimensions of the features will increase.
+The point is reducing dimensions so that it keeps important information.
+The other purpose is acquiring translation invariances.
+There are two main types of pooling.
+In this example, the 4 × 4 image is converted to a 2 x 2 image.
+The max-pooling is the process that returns the largest value in the block.
+The average-pooling is the process which outputs the mean value of the block.
+Let’s consider why pooling can acquire the movement invariance.
+In this example, max-pooling is executed on four pixels.
+In the right-hand pixel, a white pixel that seems to be useful for character recognition is shifted downward by one pixel.
+In both cases, the result of the max-pooling is the same:
+the white pixel can be extracted.
+It is possible to acquire movement-invariant features.
+We have seen the basics of CNNs, convolution, and pooling.
+The filter might not be applied to the pixels on the edge.
+The pixels near the boundary can be processed by padding.
+The padding with zero is called zero paddings.
+We can set the padding, and slide as network parameters.
+By padding, we can get the output that has the same size as the input.
+Let’s consider why pooling can acquire the movement invariance.
+In this example, max-pooling is executed on four pixels. Stride is the amount of the shift of the filter.
+Stride 1 is the minimum. It means shifting the filter by 1 pixel.
+In the right-hand pixel, a white pixel that seems to be useful for character recognition is shifted downward by one pixel.
+Stride 2 means shifting the filter by 2 pixels.
+The stride can also be set as a parameter.
+The size of the obtained feature map is dependent on the number of padding and stride.
+The local features can be extracted by the small filter.
+CNN has many models, and the famous CNN has a unique name.
+The LeNet is an old neural network
+It consists of 2 convolution layers (Conv.) and three Fully Connected Layers (FC).
+AlexNet is a famous CNN network that won the competition in 2012.
+There are many other famous networks, like VGG, GoogLeNet, and ResNet.
+The new networks with various features,
+not only stacking layers, are released almost every month.
+Please work on the character recognition assignments using CNN in the exercise part.
+The topic of this video is a generative adversarial model.
+Let's consider what is the generative model.
+The networks that we have seen throughout the lectures are used for classification.
+These models determine the class of the input data.
+From the above example, it takes “0” as the input, and its output “0.9” and “0.2”.
+Then, the model classifies the input as “0” by converting the output to the one-hot vector.
+The below example also classifies the output to “1” in the same manner.
+This is the mechanism of MLP, CNN, and RNN.
+On the other hand, a generative model creates data that is given to the feedforward networks as the inputs.
+For example, if we input a feature value of “0” such as 0.9 and 0.2, a “0”-like the image is generated.
+We can get a “1”-like the image from the input features such as 0.1 and 0.8.
+There are several generative models and for the example,
+Boltzmann machine, variational autoencoder, and generative adversarial network (GAN).
+Boltzmann machine is a network that has been studied for a long time.
+Below, these two models are invented recently.
+GAN is applied to many fields so you may have seen it.
+We will look at the detail of GAN later.
+Generative Adversarial network or GAN.
+This model has been applied in many fields and gained attention in recent years.
+This is also a generative model and it can be learned by unsupervised training.
+The discriminator, which outputs the probability of image class,
+and the generative model, which outputs the data from features, both are used in GAN.
+A neural network evaluates another neural network.
+Only the information of real or fake is given as the supervisor signal to the discriminator.
+The generation model is trained by the discriminator iteratively.
+No explicit teacher is required for traversing the generative model and the discriminator.
+This figure shows an outline of the GAN. The structure itself was a big invention.
+GAN has a Generator “G” as the generation model, and Discriminator “D” as the classifier.
+The key is how to make "G" and "D" to learn well.
+Let’s look at the rough structure.
+The image-like data “Y” is generated by the generator using random numbers.
+The discriminator is executed using the real data “X” and fake data “Y”.
+The information whether the input of “D” is real or fake is given by discriminator.
+“D” and “G” are trained with the backpropagation using the supervisory data, real or fake.
+It requires two neural networks, two data:
+fake data generated by the network and the real data,
+and the supervisory data.
+The discriminator and generative model have important roles for each other.
+The role of the discriminator is to distinguish supervisory data and the generated data.
+Discriminator requires to answer “Real” to the supervisory data.
+It needs to answer “Fake” to the generated data by another network.
+The role of the generative model is to generate data similar to the supervisory data...
+that cannot be discriminated by the discriminator.
+Therefore, this network is named adversarial network, since these models are needed to out complete each other.
+The classifier wants to correctly distinguish the data.
+The generator wants to fool the discriminator with the generated data.
+Each other purpose is adversative.
+By learning this, the data generated by the generative model becomes closer to the real supervisory data.
+In the training phase of the discriminator, the true information is given to “D”,
+in the training phase of the generator, the false information is given to “D”.
+Let’s look at the training method of the discriminator. It has two types of data.
+The real data “X” is given with the supervisory data, “real”, to make “D” answer “real”.
+The generated data “Y” is given with the supervisory data, “fake”.
+The generated image “Y” is produced by giving the “Z” seed to generate the random number.
+In the path below, input “Z”, “G” generates “Y”, and put “Y” to “D”.
+The "D" is trained using "Y" with the supervisory information “Fake”.
+In this phase, the value of “G” is not updated.
+On the other hand, in the training phase of the discriminator,
+“Y” is generated using a random number, then pass it to the discriminator.
+G wants the discriminator to classify that the generated data is real.
+Since “G” wants to generate data that cannot be seen as fake,
+The false supervisory information “real” is given to “D” and perform backpropagation
+Only the value of the generator is updated in this phase, however, the discriminator is not be updated.
+The discriminator and the generator are trained repeatedly.
+In the training phase of the discriminator, “D” is trained to discriminate the real image.
+In the training phase of the generator, “G” is trained to generate an image...
+that cannot be seen through by the discriminator.
+By repeating this, both “D” and “G” become stronger and the output “Y” becomes real to the human eye.
+The process of each part is not so difficult and many extensions can be concerned.
+For example, it is possible to replace the random number generator with an encoder.
+Data other than images can be also generated.
+For "D" and "G", CNN can be used for image processing and RNN can be used for the time series data.
+There are various applications for GAN.
+For example, deep convolutional GAN can compute the addition or subtraction of concepts.
+A man with glasses minus a man without glasses plus woman is a woman with glasses.
+Another example is the style transfer.
+For example, GAN learns the relationship between the horse and the zebra, then generate zebra from a iamge of a horse.
+In the recent misused example, the fake videos of celebrities are created and spread on social media.
+The application fields of GAN are diverse and it has a great possibility.
+For example, improving the accuracy of images, colorize line drawings, and generating images from text.
+However, sometimes it is difficult to train the network.
+There are many topics for research to solve these problems.
+Please work on the exercises of GAN.
+Let's start the lecture of the AI seminar.
+The topic today is reservoir computing.
+Let's see the concept of reservoir computing.
+Please see the image below.
+Please imagine a container or lake for storing water.
+Let's say we throw stones into the water.
+If we through three stones in a row into the water,
+we can observe the ripples on the surface made by three stones.
+The ripples change depending on the size or shape of the stones.
+The ripples also change depending on the order in which they are thrown.
+Can you imagine the changes in the water surface caused by stones?
+The reservoir computing is inspired by an idea:
+extract features of time-series data by observing the shapes of the ripples.
+The order or time that stones thrown in are appears as the ripples on the surface of the lake.
+In other words, memory is represented.
+It is suitable for time-series processing.
+By attaching a simple discriminator to the reservoir,
+the pattern can be analyzed.
+The readout is the leaning machine attached to the reservoir.
+By reservoir which represents complex patterns and simple leaning machine
+time-series data can be leaned.
+A linear learning machine is often used as the readout.
+The coefficients of a linear function are determined by training.
+We have learned a perceptron at the beginning of this course.
+The time-series data can be trained by a simple learning machine.
+This is the advantage of reservoir computing.
+Here, let's compare a linear learning machine, deep learning, and reservoir computing.
+A single linear learning machine can not learn non-linear input/output relationships.
+Though the training cost of deep learning is high,
+its computation performance is high.
+It can learn non-linear input/output relationships.
+Reservoir computing is the combination of the linear leaning machine and reservoir.
+A non-linear input/output relationship can be learned with a low training cost.
+However, the computation performance will be vary depending on the tasks.
+The diagram below is cited from the textbook.
+This diagram shows the relationships between performance and training cost.
+The training cost of reservoir computing is roughly the same as a linear training machine,
+and its performance is high.
+The number of parameters to adjust is fewer than deep learning models with a similar scale.
+Though the training cost is low,
+the computation performance varies.
+By using a reservoir,
+a lightweight recurrent neural network can be constructed.
+Reservoir computing has a high potential compare to the deep neural network.
+This computation model is attracting attention these days.
+Let's see the Echo State Network (ESN) which is the typical model of reservoir computing.
+ESN is used for time-series pattern recognition.
+Echo state, where the input history echoes and remains are created in the reservoir.
+The features that appeared in the reservoir are processed by a trained readout.
+The only readout is trained.
+A simple training machine is often used as the readout.
+In the reservoir, recurrent neurons are connected complexly.
+This connection is fixed and it is not trained.
+Only W^out is trained so the training cost is low.
+This is the definition of the vectors in the diagram below.
+Input is a N_u dimension vector.
+The reservoir has many neurons, from x_1 to x_N_x.
+This is connected to the readout.
+The dimension of the output layer is N_y.
+W_in is the connection weight that connects the input layer and reservoir.
+Connection weight within the reservoir is W.
+W^out is the connection weight that connects the reservoir and output layer.
+W_in and W are fixed, and only W^out are trained.
+Let's see the representation of the time-series pattern in the reservoir.
+The input vector and W^in are multiplied and given to the reservoir.
+In the reservoir, the neuron is connected recurrently.
+The recurrent connection at the one-time step before being added.
+We can express the time evolution of the reservoir state vector.
+A non-linear activation function is applied to each neuron.
+An activation function is a hyperbolic tangent unless otherwise noted.
+The output vector is the multiplication of the reservoir state vector and W^out.
+Let's see the derived models of the ESN.
+This is the basic model we have seen.
+These are examples of the derived models of ESN.
+In this lecture, I explain the model (a), general model.
+We have some differences between the basic model and the general model.
+First, it has a feedback connection that connects the output layer to the reservoir.
+Second, it has a connection that connects the input layer and output layer directory.
+Tough we have additional connections, only W^out is trained.
+The weight of the feedback connection, shown in green, is fixed.
+We have several types of neurons.
+Here, I explain Leaky Integrator(LI) model.
+By using the LI model,
+we can control the speed of the time evolution of the reservoir state vector.
+Thus, we can control how much past information we preserve.
+Î± is a leak rate, the hyperparameter of the model.
+When, Î± = 1, only right term effects.
+It corresponds to the basic model.
+As the Î± becomes smaller, the changes in reservoir state will not affect the input, u.
+The time evolution of the reservoir becomes slower.
+This effect is as a low-pass filter that removes the high-frequency components in time-series input data.
+Sometimes, the improvement of the performance can be expected by using this model.
+This is the simple and effective derivative model of reservoir computing.
+Next, I explain the Echo State Property (ESP), which is an important idea of the ESN.
+ESP is a property that guarantees reproducibility as a time-series input-output converter.
+This is one of the properties that the reservoir should fulfill.
+The reservoir state vector is determined by the initial state and time-series input.
+If the initial state changes, a reservoir response may differ even if the same input is given.
+To prevent the effect of the initial state,
+the time evolution of the reservoir state should be determined depending only on the time series input after enough time has passed.
+This is the mathematical representation of the previous sentence.
+The reservoir state vectors starting from the different states will be converted to the same value, for example, the value conversed to zero.
+As showing in this diagram, the reservoir state vectors starting from the different states will be converted to the same orbit.
+The reservoir needs to fulfill this property.
+These are the condition that fulfills the ESP.
+here, the activation function is a hyperbolic tangent.
+We often use spectral radius as the index.
+Spectral radius is the maximum eigenvalue of the connecting weights of the reservoir.
+All eigenvalue should be less than one.
+If we continue to multiply a matrix with all eigenvalue is less than one,
+the vector will be shortened.
+By repeating this operation, the vector will be converted to zero.
+This is the famous condition that fulfills ESP.
+We need to consider this condition when we design reservoirs.
+Another condition is the maximum singular value.
+We do not see the details here, but this condition may not be essential.
+Basically, we consider spectral radius when we design reservoirs.
+Let's see the training methods.
+We only need to train readout.
+Similar to other supervised learning, we give an input and target signal.
+When it solves the regression problem, a continuous target value will be given.
+When it solves the classification problem, a one-hot vector will be given.
+We have several methods to train readout.
+This is the typical method to train the readout.
+This is an example of linear regression.
+Here we find the W^out that minimizes the squared error of the target and the output of the model.
+We will minimize the squared error of D and X.
+The formula can be transformed into the following formula.
+This is the basic method.
+Next, let's see the ridge regression.
+In this method, a regularization term is added to the equation.
+We can prevent the W^out become larger.
+This is the transformed formula.
+Similar to the regularization we have seen in this course,
+W^out can be determined by solving this equation.
+The training cost is lower.
+Lastly, let's see some examples of the tasks.
+This is an example of linear regression.
+In this task, it predicts the value of the sine wave at the next time step.
+We give input time-series data to the reservoir and train the readout.
+By using ridge regression, it can predict the sine wave.
+The output is a continuous value.
+Next, let's see the example of classification.
+This is an example of voice recognition.
+If the output value is zero, only the output neuron of "zero" becomes one.
+Other neurons do not respond.
+The target signal is the one-hot vector that corresponds to the class.
+The reservoir computing can be applied to voice recognition,
+however, we need to pre-process the input voice because the training of the original signal is difficult.
+We decompose the voice signal according to the frequency band.
+By introducing pre-proccing, the voice signal can be classified by reservoir computing.
+Now, let's quickly review the topic today.
+Reservoir computing is a lightweight model, and it has an ability equivalent to the deep recurrent neural network.
+It is drawing attention these days.
+This concludes the lecture today, thank you.
+Hello everyone, let's start the lecture of the AI seminar.
+Today's topic is Recurrent Neural Networks (RNNs).
+These are the topics of the lecture today.
+First, I explain time-series data.
+Next, I explain RNNs.
+Now, let see the time-series data.
+Time-series data is the data that changes over time.
+Here is an example of time-series data.
+The natural language that I am speaking now is time-series data.
+Sentences and conversations are included in natural language.
+Other time-series data include stock prices and weather which change every day.
+It is known that values at a given time are generally correlated with values at the time past and future values.
+For example, a natural language has grammar.
+In Japanese, verbs, and nouns appear according to a set of rules.
+Therefore, this time-series data is considered to be data that is related to the past data future data.
+As a simple example, let's see the temperature data.
+This graph shows the date on the horizontal axis and the temperature on the vertical axis.
+Time elapses from left to right on the horizontal axis.
+This graph shows a relationship where the temperature gradually increases.
+Let's think about what we can do with this data.
+For example, we can predict temperature.
+If the temperature can be predicted, it will be useful for weather forecasting.
+However, processing time-series data is very difficult.
+Time-series data is often correlated with the past data future data.
+Therefore, it is necessary to take into account the data accumulated just before.
+To predict the temperature on the January 4th,
+we need to take into account the data from January 1st to January 3rd.
+Let's consider how we can predict data on the MLP, which we learned in the previous lecture.
+In this case, the structure of the MLP changes depending on the number of past data to be referenced.
+With this time-series data, it is difficult to predict the temperature on the January 4th day by looking at only January 3rd.
+As I mentioned earlier, prediction using data over a long period is more accurate.
+It is also difficult to determine how much past data is needed to predict the temperature of the next day.
+However, in the case of MLP, we cannot create a structure unless we determine the reference range.
+For example, if we want to refer to the past temperature for three days, the number of input layers is three.
+If we refer to the past four days of temperature, the number of input layers becomes four.
+It is not possible to define the structure of the network without determining in advance the quantity to be referenced.
+It is also difficult to know how many days should be referred.
+This is where the Recurrent Neural Networks (RNNs) comes in.
+First, let's see the structure.
+The Recurrent Neural Networks are called RNNs for short.
+This neural network has a feedback structure in the hidden layer.
+This method introduces the concept of time to neural networks.
+In the case of MLP, the input is processed in the hidden layer(s), and we get output(s).
+The RNN has a feedback structure in the hidden layer.
+The feedback connection is also acquired by training.
+One of the features of RNN is that "h^t" is determined by the current input and the state of the hidden layer one-time step before.
+First, let's try to understand it simply.
+RNN has a feedback connection in the hidden layer.
+In this lecture, from now on, we have will use this block diagram,
+instead of the notation using neurons and synapses.
+Remember that the square and an arrow on the right diagram mean the same thing as on the left diagram.
+we called the diagram which only has the black arrow pointing to the right, a forward propagation network.
+The key character of RNNs is that they have a feedback connection to themselves.
+Again, the notation on the right will be used from now on.
+First, let's consider the forward calculation of the RNN.
+The way to calculate the output "h^t" of the hidden layer is different from the one of the MLP.
+In the case of MLPs, the output of the hidden layer is obtained by multiplying weights to the input and applying the activation function.
+In the case of RNNs, since they have feedback connections,
+The output of the hidden layer is obtained by...
+multiplying the feedback connection and the state of the hidden layer of the one-time step before,
+in addition to the multiplication of inputs and outputs.
+It is relatively easy to understand.
+The idea is to consider the input from the left together with the feedback connection part.
+Now, we can calculate forward propagation.
+Let's think about how we will train the networks.
+The network is trained by back-propagation to calculate the gradient of the weights and biases, like MLPs.
+The weights and biases are updated by optimizing them.
+Let's look at the lower figure.
+The output in the forward propagation is compared with the target and the error is fed back.
+This black arrow is the same as in MLPs.
+In the case of RNNs, this feedback connection is also updated using gradients.
+The point is how to calculate the yellow part.
+We will unfold the hidden layers in the time direction.
+Let's consider how we unfold the network through time.
+The input of the hidden layer is the output of the hidden layer at the previous time and the input of the current time.
+Let's consider how we calculate the yellow part.
+The network is represented like the figure on the right side by unfolding the yellow area through time.
+t, "t = 1", "t = 2", "t = T" is the time.
+Let's consider the left most part, "t = 1".
+The input "x^1" at time 1 is passed through the hidden layer and the output "y^1" is obtained.
+Next, let's consider the "t = 2".
+The output "y^2" is obtained by combining the current input "x^2"
+and the state of the hidden layer "h^1" of the one-time step before.
+The arrow from "h^1" to "h^2" corresponds to "h^(t - 1)" in the figure on the left.
+The same can be done for "t = 3" and "t = 4".
+As the number of times is increased, it is expanded horizontally.
+In the left figure, it is represented in the feedback connection.
+These yellow areas are all hidden layers.
+It is considered a huge MLP with "T" hidden layers.
+Since this is a huge MLP, we can use the back-propagation method.
+This idea is the idea is back-propagation through time.
+It's called BPTT for short.
+Since BPTT is a huge MLP, by propagating the error from each graph, the weights of this hidden layer can be trained.
+This is a very simple idea.
+BPPT can be divided into two main patterns depending on the way of handling time-series data.
+First: in case the target data is provided to the all-time steps.
+This is used when we predict data each time.
+The error is calculated and summed for all times and back-propagated.
+Second: in case the target data is provided only at the last time.
+It is used when we solve the classification problem at certain time intervals.
+The error is calculated at the last time, and it is back-propagated.
+Let' see the first pattern, BPTT1.
+We have target data for all time steps.
+In this example, let's consider the three-time steps.
+When "x^1â€ is inputted, "y^1" is outputted.
+Then we have "y^1_(target)" for "y^1", which gives us the error "E^1".
+In the same manner, we can get "y^2" for "x^2", and the error "E^2" is obtained.
+"E^3" can be obtained in the same manner.
+By summing up the obtained three errors, we can calculate back-propagation.
+A typical example is the problem of predicting the temperature for the next day.
+This example predicts the temperature of the next day based on the past temperatures of several days.
+If we want to predict the next day's data using three days of data, we will give those data as a target.
+The error can be accumulated for all data.
+The network predicts the temperature for the next day, "y^1" from the temperature on January 1st, 2.8 degrees.
+We can get actual data from the next day, we will use it as the target.
+Then, the error from "y^1" is fed back and we can train the "h^1".
+Next, predict the temperature on January 3rd.
+At that time, the network predicts the temperature using the data of January 1st and 2nd.
+"y^2" can be obtained by merging two values, the value from this current step and the previous step.
+We use the data from January 3rd as a target to obtain the error from "y^2".
+Both "h^1" and "h^2" are updated by back-propagating the obtained error "E^2".
+The key point is that there is a branch at the "h^2".
+If we unfold the networks many times, it becomes like this figure.
+For example, this part is updated by summing up all the errors of "E^1", "E^2", and "E^3".
+In this example, we have used data from three time steps.
+This operation can be made into a rule, we can make a program to calculate the network with many time steps.
+Let's see the next pattern, BPTT2.
+In this case, the target is given for the last time, step three.
+In this case, only the error "E^3" is branched and back-propagated.
+A typical example is classification.For example, classifying seasons based on temperature graphs.
+For example, the network output the label "winter" after the data for 7-time steps is given.
+The idea of BPTT2 is almost the same as BPTT1.
+The difference is that we calculate the error when all data is inputted.
+In the case of forward-propagation, they are merged like this figure,
+In the case of back-propagation, they are merged like this figure.
+In this way, we can consider the huge RNN as the huge MLP and train it is using the back-propagation.
+However, we have a disadvantage of the RNNs especially RNNs which are trained by BPTT.
+The BPTT can be considered a huge MLP.
+The network of T=100 corresponds to the MPL with 100 layers.
+"y^T" can be obtained by passing through the data to the hidden layer 100 times.
+In the case of forwarding propagation, it is not possible to accumulate long-term time-series data.
+When training by back-propagation, the gradient vanishing problem and gradient explosion problem will occur.
+These problems have long been known as problems of neural networks.
+This causes training failure.
+Several networks are designed to overcome this problem.
+A typical one is Long Short-Term Memory (LSTM).
+The LSTM is overcoming the disadvantage of BPTT.
+This network can acquire long-term memory.
+This is often used when we handle long sentences.
+In the LSTM, it is judged internally whether the output of the hidden layer is fully utilized.
+I just explain the fundamental concept of LSTM.
+The input gate adjusts the amount of input to the network.
+The memory cell stores the previous states.
+The forget gate adjusts the forgetting degree of the states.
+The output gate adjusts the amount of output to the next layer.
+In this way, the LSTM uses multiple gates to control the input/output and state of the network.
+If you would like to know more about LSTM, please refer to textbooks or articles available on the internet.
+Today, we have seen the recurrent neural networks:
+How we handle the time-series data and BPTT.
+Finally, we have seen the fundamental idea of LSTM as one of the practical RNNs.
+This concludes the lecture part for today.
