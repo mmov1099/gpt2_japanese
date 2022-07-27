@@ -1,0 +1,9 @@
+.vscode/
+output/
+output25/
+output50/
+output75/
+output100/
+runs/
+transformers/
+myenv/
