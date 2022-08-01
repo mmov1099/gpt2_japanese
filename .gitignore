@@ -4,6 +4,9 @@ output25/
 output50/
 output75/
 output100/
+output150/
+output200/
 runs/
 transformers/
 myenv/
+plt.ipynb
