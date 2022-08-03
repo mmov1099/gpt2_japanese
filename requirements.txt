@@ -21,9 +21,9 @@ sacremoses==0.0.53
 sentencepiece==0.1.91
 six==1.16.0
 tokenizers==0.10.3
-torch==1.12.0+cu116
-torchaudio==0.12.0+cu116
-torchvision==0.13.0+cu116
+# torch==1.12.0+cu116
+# torchaudio==0.12.0+cu116
+# torchvision==0.13.0+cu116
 tqdm==4.49.0
 -e git+https://github.com/huggingface/transformers@9f43a425fe89cfc0e9b9aa7abd7dd44bcaccd79a#egg=transformers
 typing-extensions==4.3.0
